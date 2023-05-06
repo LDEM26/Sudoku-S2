@@ -16,33 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `statisitques`
+-- Table structure for table `parties`
 --
 
-DROP TABLE IF EXISTS `statisitques`;
+DROP TABLE IF EXISTS `parties`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `statisitques` (
-  `stat_id` int NOT NULL,
-  `nbparties` int DEFAULT NULL,
-  `victoires` int DEFAULT NULL,
-  `défaites` int DEFAULT NULL,
-  `nuls` int DEFAULT NULL,
-  `ratiovd` float DEFAULT NULL,
-  `classement` int DEFAULT NULL,
-  PRIMARY KEY (`stat_id`),
-  UNIQUE KEY `stat_id_UNIQUE` (`stat_id`),
-  UNIQUE KEY `classement_UNIQUE` (`classement`)
+CREATE TABLE `parties` (
+  `idparties` int NOT NULL,
+  `date` datetime DEFAULT NULL,
+  `durée_sec` int NOT NULL,
+  `idjoueurgagne` int NOT NULL,
+  `grille` int DEFAULT NULL,
+  PRIMARY KEY (`idparties`),
+  UNIQUE KEY `idparties_UNIQUE` (`idparties`),
+  UNIQUE KEY `idjoueurgagne_UNIQUE` (`idjoueurgagne`),
+  KEY `grille_idx` (`grille`),
+  CONSTRAINT `grille` FOREIGN KEY (`grille`) REFERENCES `grille` (`idgrille`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `statisitques`
+-- Dumping data for table `parties`
 --
 
-LOCK TABLES `statisitques` WRITE;
-/*!40000 ALTER TABLE `statisitques` DISABLE KEYS */;
-/*!40000 ALTER TABLE `statisitques` ENABLE KEYS */;
+LOCK TABLES `parties` WRITE;
+/*!40000 ALTER TABLE `parties` DISABLE KEYS */;
+/*!40000 ALTER TABLE `parties` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-06 13:46:47
+-- Dump completed on 2023-05-06 14:19:48

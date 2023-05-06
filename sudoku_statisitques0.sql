@@ -16,32 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `joueur`
+-- Table structure for table `statisitques`
 --
 
-DROP TABLE IF EXISTS `joueur`;
+DROP TABLE IF EXISTS `statisitques`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `joueur` (
-  `idJoueur` int NOT NULL,
-  `pseudo` varchar(45) NOT NULL,
-  `mdp` text NOT NULL COMMENT 'Crypté',
-  `stat_id` int NOT NULL AUTO_INCREMENT,
-  `date_inscription` datetime NOT NULL,
-  PRIMARY KEY (`idJoueur`),
-  UNIQUE KEY `idJoueur_UNIQUE` (`idJoueur`),
-  UNIQUE KEY `pseudo_UNIQUE` (`pseudo`),
-  UNIQUE KEY `stat_id_UNIQUE` (`stat_id`)
+CREATE TABLE `statisitques` (
+  `stat_id` int NOT NULL,
+  `nbparties` int DEFAULT NULL,
+  `victoires` int DEFAULT NULL,
+  `défaites` int DEFAULT NULL,
+  `nuls` int DEFAULT NULL,
+  `ratiovd` float DEFAULT NULL,
+  `classement` int DEFAULT NULL,
+  PRIMARY KEY (`stat_id`),
+  UNIQUE KEY `stat_id_UNIQUE` (`stat_id`),
+  UNIQUE KEY `classement_UNIQUE` (`classement`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `joueur`
+-- Dumping data for table `statisitques`
 --
 
-LOCK TABLES `joueur` WRITE;
-/*!40000 ALTER TABLE `joueur` DISABLE KEYS */;
-/*!40000 ALTER TABLE `joueur` ENABLE KEYS */;
+LOCK TABLES `statisitques` WRITE;
+/*!40000 ALTER TABLE `statisitques` DISABLE KEYS */;
+/*!40000 ALTER TABLE `statisitques` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-06 13:46:47
+-- Dump completed on 2023-05-06 14:19:48

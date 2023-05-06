@@ -16,29 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `grille`
+-- Table structure for table `joueur`
 --
 
-DROP TABLE IF EXISTS `grille`;
+DROP TABLE IF EXISTS `joueur`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `grille` (
-  `idgrille` int NOT NULL,
-  `board` text NOT NULL,
-  `solution` text NOT NULL,
-  `difficulté` int DEFAULT NULL,
-  PRIMARY KEY (`idgrille`),
-  UNIQUE KEY `idgrille_UNIQUE` (`idgrille`)
+CREATE TABLE `joueur` (
+  `idJoueur` int NOT NULL,
+  `pseudo` varchar(45) NOT NULL,
+  `mdp` text NOT NULL COMMENT 'Crypté',
+  `stat_id` int NOT NULL AUTO_INCREMENT,
+  `date_inscription` datetime NOT NULL,
+  PRIMARY KEY (`idJoueur`),
+  UNIQUE KEY `idJoueur_UNIQUE` (`idJoueur`),
+  UNIQUE KEY `pseudo_UNIQUE` (`pseudo`),
+  UNIQUE KEY `stat_id_UNIQUE` (`stat_id`),
+  CONSTRAINT `stat_id` FOREIGN KEY (`stat_id`) REFERENCES `statisitques` (`stat_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `grille`
+-- Dumping data for table `joueur`
 --
 
-LOCK TABLES `grille` WRITE;
-/*!40000 ALTER TABLE `grille` DISABLE KEYS */;
-/*!40000 ALTER TABLE `grille` ENABLE KEYS */;
+LOCK TABLES `joueur` WRITE;
+/*!40000 ALTER TABLE `joueur` DISABLE KEYS */;
+/*!40000 ALTER TABLE `joueur` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-06 13:46:47
+-- Dump completed on 2023-05-06 14:19:48
