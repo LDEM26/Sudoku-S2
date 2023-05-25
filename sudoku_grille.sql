@@ -16,33 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `statisitques`
+-- Table structure for table `grille`
 --
 
-DROP TABLE IF EXISTS `statisitques`;
+DROP TABLE IF EXISTS `grille`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `statisitques` (
-  `stat_id` int NOT NULL,
-  `nbparties` int DEFAULT NULL,
-  `victoires` int DEFAULT NULL,
-  `défaites` int DEFAULT NULL,
-  `nuls` int DEFAULT NULL,
-  `ratiovd` float DEFAULT NULL,
-  `classement` int DEFAULT NULL,
-  PRIMARY KEY (`stat_id`),
-  UNIQUE KEY `stat_id_UNIQUE` (`stat_id`),
-  UNIQUE KEY `classement_UNIQUE` (`classement`)
+CREATE TABLE `grille` (
+  `idgrille` int NOT NULL,
+  `board` text NOT NULL,
+  `solution` text,
+  `difficulté` int DEFAULT NULL,
+  PRIMARY KEY (`idgrille`),
+  UNIQUE KEY `idgrille_UNIQUE` (`idgrille`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `statisitques`
+-- Dumping data for table `grille`
 --
 
-LOCK TABLES `statisitques` WRITE;
-/*!40000 ALTER TABLE `statisitques` DISABLE KEYS */;
-/*!40000 ALTER TABLE `statisitques` ENABLE KEYS */;
+LOCK TABLES `grille` WRITE;
+/*!40000 ALTER TABLE `grille` DISABLE KEYS */;
+INSERT INTO `grille` VALUES (0,'([None, None, 9, None, None, None, None, 1, 4], [1, None, 4, None, None, None, 6, 5, 2], [None, 3, 5, None, 2, None, None, None, 8], [None, 5, 7, None, 3, 1, 2, 6, 9], [None, 6, None, None, None, None, None, 3, None], [3, None, None, None, None, 2, None, 8, None], [None, None, 8, None, 9, None, None, 2, 1], [9, None, None, 7, None, None, 8, None, None], [None, 1, None, None, None, 8, None, None, None])','NULL',0);
+/*!40000 ALTER TABLE `grille` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-06 14:19:48
+-- Dump completed on 2023-05-25 21:10:19
