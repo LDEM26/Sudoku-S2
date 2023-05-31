@@ -1,6 +1,6 @@
 import mysql.connector
 from datetime import datetime
-from credentials import Credentials
+from credentialsExample import Credentials
 
 ############################# Connexion SGBD + création curseur######################################
 
@@ -178,7 +178,7 @@ def verif_connexion(pseudo: str, mdp: str):
     Vérifie si l'utilisateur est le bon et le mdp aussi
     """
     try:
-        # curseur.execute("SELECT pseudo, mdp FROM Joueur WHERE pseudo="+str(pseudo)" AND mdp="+str(mdp)+"")
+        curseur.execute("SELECT pseudo, mdp FROM Joueur WHERE pseudo='"+str(pseudo)+"' AND mdp='"+str(mdp)+"'")
         return True
     except:
         return "Pseudo ou mdp incorrect"
@@ -211,5 +211,6 @@ get_board(0)
 # print(verif_connexion("Bg7","mdpbien"))
 # get_mdp("Benoit")
 print(curseur.execute(
-    "SELECT pseudo, mdp FROM Joueur WHERE pseudo='Bg7' AND mdp='mdpbien'"))
+    "SELECT pseudo, mdp FROM Joueur WHERE pseudo='Bg7' AND mdp='mdpbien';"))
+print(verif_connexion('Bg7', 'mdpbien'))
 db.close()

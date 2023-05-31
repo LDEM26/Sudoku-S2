@@ -1,8 +1,8 @@
 class Credentials:
-    _username = ""
-    _password = ""
-    _host = ""
-    _database = ""
+    _username = "root"
+    _password = "sudoku"
+    _host = "127.0.0.1"
+    _database = "sudoku"
 
     @classmethod
     def get_username(self) -> str:

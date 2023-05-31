@@ -5,6 +5,7 @@ Created on Mon May 22 11:22:08 2023
 @author: lydie
 """
 from tkinter import *
+from pickdata import verif_connexion 
 
 
 fenetre1 = Tk()
@@ -13,11 +14,20 @@ fenetre1.title("Connection")
 
 
 def recup():
+    """
+    Récupère mdp et login
+    """
     res=(user_Entry.get(),user_mdp.get())
-    user_Entry.delete(0, END)
-    user_mdp.delete(0, END)
-    fenetre1.destroy()
     return res
+
+def changer_fenetre():
+        user, mdp = recup()
+        if verif_connexion(user, mdp) == True :
+            user_Entry.delete(0, END)
+            user_mdp.delete(0, END)
+            fenetre1.destroy()
+        #else :
+        #Ouvrir une fenêtre erreur.
 
 
 
@@ -25,7 +35,7 @@ def recup():
 frame1= Frame (fenetre1, width=100,height=0,)
 frame1.place(x=350, y=100)
 
-boutonvalid=Button(fenetre1, bg='#45e325', text='valider', fg='black',height=0, command=recup)
+boutonvalid=Button(fenetre1, bg='#45e325', text='valider', fg='black',height=0, command=changer_fenetre)
 boutonvalid.place(x=390, y=200)
 
 user_Entry = Entry(frame1,)
@@ -34,7 +44,7 @@ user.pack()
 user_Entry.pack()
 
 user_mdp = Entry(frame1, show="*")
-use = Label(frame1, text = "mot de pass")
+use = Label(frame1, text = "mot de passe")
 use.pack()
 user_mdp.pack()
 
