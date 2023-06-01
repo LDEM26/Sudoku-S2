@@ -68,7 +68,7 @@ def lignelabel(lab):
 
 
 # créer la grille, ce qui s'active quand on clique sur jouer
-def jouer(sudoku:list, diff:float = 0.5, taille:int = 3) -> None:
+def jouer(sudoku:list = sudoku, diff:float = 0.5, taille:int = 3) -> None:
     # grille de 9 carré gris
     lab = []  # liste contenant les labels
     frameprincipale = Frame(fenetre)
@@ -78,27 +78,34 @@ def jouer(sudoku:list, diff:float = 0.5, taille:int = 3) -> None:
             l = Label(frameprincipale, bg='#858585', width=4,
                       height=2, relief="groove", borderwidth=4)
             l.grid(row=i, column=j)
-            lab.append(l)
+            lab.append([l,j,i])
+            
 
-    
+    print(lab)
     for label in lab:
+        label1=label[0]
+        print(label1)
         texte = str(remplir(sudoku)[0])
+        global listentre
+        listentre=[]
         if texte == '0':
-            entree = Entry(label, width=0, bg='#a1a1a1')
+            entree = Entry(label1, width=0, bg='#a1a1a1')
             entree.grid(ipadx=10, ipady=6)
+            listentre.append(entree,lab[1],lab[2])
         else:
-            label['text'] += texte
+            label1['text'] += texte
 
 
 
-sudoku = sudo()
+s= sudo()
+sudoku=s[0]
+solution=s[1]
 
 
 
 # bouton jouer
-boutjouer = Button(framejouer, bg='#45e325', text='Jouer',
-                   fg='white', font='Impact', command=jouer)
-boutjouer.grid(sudoku)
+boutjouer = Button(framejouer, bg='#45e325', text='Jouer', fg='white', font='Impact', command=jouer)
+boutjouer.grid()
 
 #récuperer les valeurs rentrées
 
