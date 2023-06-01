@@ -108,5 +108,10 @@ boutjouer = Button(framejouer, bg='#45e325', text='Jouer',
                    fg='white', font='Impact', command=jouer)
 boutjouer.grid()
 
+#récuperer les valeurs rentrées
+
+
+
+
 
 fenetre.mainloop()
