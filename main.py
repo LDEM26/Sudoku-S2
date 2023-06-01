@@ -28,36 +28,23 @@ diff = Scale(framediff, orient='horizontal', from_=1, to=9)
 diff.pack()
 
 
-# frame pour choisir la taille
-frametaille = Frame(fenetre, bg='#f1d7f3', width=250, height=0)
-frametaille.place(x=200, y=20)
-
-
-# label de la taille pour le title
-titre2 = Label(frametaille, bg='#f1d7f3', text='Dimension du sudoku', width=20)
-titre2.pack()
-
-# curseur pour la taille
-taille1 = Spinbox(frametaille, from_=2, to=5)
-taille2 = Spinbox(frametaille, from_=2, to=5)
-taille1.pack()
-taille2.pack()
-
 # frame bouton
 framejouer = Frame(fenetre, bg='red')
 framejouer.place(x=400, y=30)
 
 
 # générer aléatoirement des listes de sudoku
-def sudo(taille:int = 3) -> list:
+def sudo(taille:int = 3) -> tuple:
     valdiff = (diff.get())/10
     # créer graine aléatoire
     graine = randint(0, 10000)
     # créer la grille avec la graine
     sudoku = Sudoku(taille, seed=graine).difficulty(valdiff)
     # returner la grille
-    return sudoku.board
+    return (sudoku.board, sudoku.solve)
 
+
+sudoku=sudo()[0]
 
 def remplir(listesudo:list) -> tuple:
     for i in range(len(listesudo)):
@@ -81,7 +68,7 @@ def lignelabel(lab):
 
 
 # créer la grille, ce qui s'active quand on clique sur jouer
-def jouer(diff:float = 0.5, taille:int = 3) -> None:
+def jouer(sudoku:list, diff:float = 0.5, taille:int = 3) -> None:
     # grille de 9 carré gris
     lab = []  # liste contenant les labels
     frameprincipale = Frame(fenetre)
@@ -93,7 +80,7 @@ def jouer(diff:float = 0.5, taille:int = 3) -> None:
             l.grid(row=i, column=j)
             lab.append(l)
 
-    sudoku = sudo()
+    
     for label in lab:
         texte = str(remplir(sudoku)[0])
         if texte == '0':
@@ -103,10 +90,15 @@ def jouer(diff:float = 0.5, taille:int = 3) -> None:
             label['text'] += texte
 
 
+
+sudoku = sudo()
+
+
+
 # bouton jouer
 boutjouer = Button(framejouer, bg='#45e325', text='Jouer',
                    fg='white', font='Impact', command=jouer)
-boutjouer.grid()
+boutjouer.grid(sudoku)
 
 #récuperer les valeurs rentrées
 
