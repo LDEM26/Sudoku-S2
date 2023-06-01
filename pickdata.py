@@ -217,10 +217,3 @@ print(row)
 print(verif_connexion('Bg7', 'mdpbien'))
 db.close()
 
-
-"""
-Trouver pourquoi la requête print(curseur.execute(
-    "SELECT pseudo, mdp FROM Joueur WHERE pseudo="Bg7" AND mdp="mdpbien""))
-
-renvoie None.
-"""
