@@ -18,16 +18,10 @@ def recup():
     Récupère mdp et login
     """
     res=(user_Entry.get(),user_mdp.get())
+    user_Entry.delete(0, END)
+    user_mdp.delete(0, END)
+    fenetre1.destroy()
     return res
-
-def changer_fenetre():
-        user, mdp = recup()
-        if verif_connexion(user, mdp) == True :
-            user_Entry.delete(0, END)
-            user_mdp.delete(0, END)
-            fenetre1.destroy()
-        #else :
-        #Ouvrir une fenêtre erreur.
 
 
 
@@ -35,7 +29,7 @@ def changer_fenetre():
 frame1= Frame (fenetre1, width=100,height=0,)
 frame1.place(x=350, y=100)
 
-boutonvalid=Button(fenetre1, bg='#45e325', text='valider', fg='black',height=0, command=changer_fenetre)
+boutonvalid=Button(fenetre1, bg='#45e325', text='valider', fg='black',height=0, command=recup)
 boutonvalid.place(x=390, y=200)
 
 user_Entry = Entry(frame1,)
