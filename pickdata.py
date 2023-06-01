@@ -210,7 +210,17 @@ liste = [None, None, 9, None, None, None, None, 1, 4], [1, None, 4, None, None, 
 get_board(0)
 # print(verif_connexion("Bg7","mdpbien"))
 # get_mdp("Benoit")
-print(curseur.execute(
-    "SELECT pseudo, mdp FROM Joueur WHERE pseudo='Bg7' AND mdp='mdpbien';"))
+curseur.execute(
+    "SELECT pseudo, mdp FROM Joueur WHERE pseudo='Bg7' AND mdp='mdpbien'")
+row = curseur.fetchall()
+print(row)
 print(verif_connexion('Bg7', 'mdpbien'))
 db.close()
+
+
+"""
+Trouver pourquoi la requête print(curseur.execute(
+    "SELECT pseudo, mdp FROM Joueur WHERE pseudo="Bg7" AND mdp="mdpbien""))
+
+renvoie None.
+"""
