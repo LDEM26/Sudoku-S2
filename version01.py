@@ -96,7 +96,7 @@ def jouer(diff:float=0.5, taille:int=3 ,sudoku=sudoku, sol:list=listsol) -> None
         else:
             label['text'] += texte
     
-    
+    compteur=2
    # boucle infini
     def on_return(event):
         for cle in listentry:
@@ -110,11 +110,11 @@ def jouer(diff:float=0.5, taille:int=3 ,sudoku=sudoku, sol:list=listsol) -> None
                 if listsol[ligne][colonne]==int(valeur):
                     cle.config(state="disabled",disabledbackground="#BEFFB9")
                     del(listentry[cle])
-                    print("aa")
+                    
                 else:
                     faux=Toplevel(fenetre)
                     faux.geometry("200x60")
-                    lab=Label(faux, text=listsol[ligne][colonne],font='impact',width=400)
+                    lab=Label(faux, text="Mauvaise Réponse il vous reste :",font='impact',width=400)
                     lab.pack()
                     
                     
