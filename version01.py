@@ -8,13 +8,16 @@ from fenetre1 import *
 from sudoku import *
 from tkinter import *
 from random import *
-
+from time import *
 
 
 
 #création fenetre principale
 fenetre=Tk()
 fenetre.geometry('500x500')
+
+
+
 
 #frame pour choisir la difficulté
 framediff= Frame (fenetre, bg='#f1d7f3', width=100,height=0)
@@ -40,7 +43,7 @@ framejouer.place(x=200, y=30)
 
 
 #générer aléatoirement des listes de sudoku
-def sudo(taille:int = 3) -> sudoku.sudoku.Sudoku :
+def sudo(taille:int = 3):
     valdiff=(diff.get())/10
     #créer graine aléatoire
     graine=randint(0,10000)
@@ -93,9 +96,25 @@ def jouer(diff:float=0.5, taille:int=3 ,sudoku=sudoku, sol:list=listsol) -> None
         else:
             label['text'] += texte
     
-
-#    for cle in listentry:
- #       a=entree.get()
+    
+   # boucle infini
+    def on_return(event):
+        for cle in listentry:
+            valcle=listentry[cle]
+            ligne=valcle[0]
+            colonne=valcle[1]
+            valeur=cle.get()
+            if valeur== '':
+                pass
+            else:
+                if listsol[ligne][colonne]==int(valeur):
+                    cle.config(state="disabled")
+                    del(listentry[cle])
+                    print("aa")
+                else:
+                    print("Vous avez faux")
+    fenetre.bind_all("<Return>", on_return)
+    
     
 
     
