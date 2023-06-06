@@ -40,7 +40,7 @@ framejouer.place(x=200, y=30)
 
 
 #générer aléatoirement des listes de sudoku
-def sudo(taille=3):
+def sudo(taille:int = 3) -> sudoku.sudoku.Sudoku :
     valdiff=(diff.get())/10
     #créer graine aléatoire
     graine=randint(0,10000)
@@ -49,7 +49,7 @@ def sudo(taille=3):
     # returner la grille      
     return sudoku
 
-def remplir(listesudo):
+def remplir(listesudo:list) -> tuple:
     for i in range(len(listesudo)):
         #on parcours les cases du sudoku
         for j in range(len(listesudo[i])):
@@ -63,19 +63,14 @@ def remplir(listesudo):
                 return (val, listesudo)
 
 
-#mettre les labels en ligne
-def lignelabel(lab):
-    nb=len(lab)/3
-    for i in range(nb):
-        none
         
 sudo=sudo()
 sudoku=sudo.board
 solution=sudo.solve()
-lissol=solution.board
+listsol=solution.board
 
 #créer la grille, ce qui s'active quand on clique sur jouer
-def jouer(diff=0.5, taille=3 ,sudoku=sudoku, sol=solution):
+def jouer(diff:float=0.5, taille:int=3 ,sudoku=sudoku, sol:list=listsol) -> None:
 #grille de 9 carré gris
     lab=[] #liste contenant les labels
     frameprincipale=Frame(fenetre)
