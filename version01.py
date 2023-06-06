@@ -112,7 +112,12 @@ def jouer(diff:float=0.5, taille:int=3 ,sudoku=sudoku, sol:list=listsol) -> None
                     del(listentry[cle])
                     print("aa")
                 else:
-                    print("Vous avez faux")
+                    faux=Toplevel(fenetre)
+                    faux.geometry("200x60")
+                    lab=Label(faux, text='Vous avez faux',font='impact',width=400)
+                    lab.pack()
+                    
+                    
     fenetre.bind_all("<Return>", on_return)
     
     
