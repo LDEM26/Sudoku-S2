@@ -71,7 +71,8 @@ def lignelabel(lab):
         
 sudo=sudo()
 sudoku=sudo.board
-solution=sudo.solve
+solution=sudo.solve()
+lissol=solution.board
 
 #créer la grille, ce qui s'active quand on clique sur jouer
 def jouer(diff=0.5, taille=3 ,sudoku=sudoku, sol=solution):
