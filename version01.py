@@ -8,13 +8,16 @@ from fenetre1 import *
 from sudoku import *
 from tkinter import *
 from random import *
-
+from time import *
 
 
 
 #création fenetre principale
 fenetre=Tk()
-fenetre.geometry('500x500')
+fenetre.geometry('850x538')
+
+
+
 
 #frame pour choisir la difficulté
 framediff= Frame (fenetre, bg='#f1d7f3', width=100,height=0)
@@ -40,7 +43,7 @@ framejouer.place(x=200, y=30)
 
 
 #générer aléatoirement des listes de sudoku
-def sudo(taille=3):
+def sudo(taille:int = 3):
     valdiff=(diff.get())/10
     #créer graine aléatoire
     graine=randint(0,10000)
@@ -49,7 +52,7 @@ def sudo(taille=3):
     # returner la grille      
     return sudoku
 
-def remplir(listesudo):
+def remplir(listesudo:list) -> tuple:
     for i in range(len(listesudo)):
         #on parcours les cases du sudoku
         for j in range(len(listesudo[i])):
@@ -63,19 +66,14 @@ def remplir(listesudo):
                 return (val, listesudo)
 
 
-#mettre les labels en ligne
-def lignelabel(lab):
-    nb=len(lab)/3
-    for i in range(nb):
-        none
         
 sudo=sudo()
 sudoku=sudo.board
 solution=sudo.solve()
-lissol=solution.board
+listsol=solution.board
 
 #créer la grille, ce qui s'active quand on clique sur jouer
-def jouer(diff=0.5, taille=3 ,sudoku=sudoku, sol=solution):
+def jouer(diff:float=0.5, taille:int=3 ,sudoku=sudoku, sol:list=listsol) -> None:
 #grille de 9 carré gris
     lab=[] #liste contenant les labels
     frameprincipale=Frame(fenetre)
@@ -84,7 +82,7 @@ def jouer(diff=0.5, taille=3 ,sudoku=sudoku, sol=solution):
         for i in range(9):
             l=Label(frameprincipale,bg='#858585',width=4,height=2,relief="groove",borderwidth=4)
             l.grid(row=i,column=j)
-            lab.append([l,(i,j)])
+            lab.append([l,(j,i)])
     
     listentry={}
     
@@ -98,9 +96,30 @@ def jouer(diff=0.5, taille=3 ,sudoku=sudoku, sol=solution):
         else:
             label['text'] += texte
     
-    print(sol)
-#    for cle in listentry:
- #       a=entree.get()
+    compteur=2
+   # boucle infini
+    def on_return(event):
+        for cle in listentry:
+            valcle=listentry[cle]
+            ligne=valcle[0]
+            colonne=valcle[1]
+            valeur=cle.get()
+            if valeur== '':
+                pass
+            else:
+                if listsol[ligne][colonne]==int(valeur):
+                    cle.config(state="disabled",disabledbackground="#BEFFB9")
+                    del(listentry[cle])
+                    
+                else:
+                    faux=Toplevel(fenetre)
+                    faux.geometry("200x60")
+                    lab=Label(faux, text="Mauvaise Réponse il vous reste :",font='impact',width=400)
+                    lab.pack()
+                    
+                    
+    fenetre.bind_all("<Return>", on_return)
+    
     
 
     
