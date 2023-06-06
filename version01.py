@@ -93,7 +93,7 @@ def jouer(diff:float=0.5, taille:int=3 ,sudoku=sudoku, sol:list=listsol) -> None
         else:
             label['text'] += texte
     
-    print(sol)
+
 #    for cle in listentry:
  #       a=entree.get()
     
