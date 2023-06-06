@@ -14,7 +14,7 @@ from time import *
 
 #création fenetre principale
 fenetre=Tk()
-fenetre.geometry('500x500')
+fenetre.geometry('850x538')
 
 
 
@@ -82,7 +82,7 @@ def jouer(diff:float=0.5, taille:int=3 ,sudoku=sudoku, sol:list=listsol) -> None
         for i in range(9):
             l=Label(frameprincipale,bg='#858585',width=4,height=2,relief="groove",borderwidth=4)
             l.grid(row=i,column=j)
-            lab.append([l,(i,j)])
+            lab.append([l,(j,i)])
     
     listentry={}
     
@@ -108,13 +108,13 @@ def jouer(diff:float=0.5, taille:int=3 ,sudoku=sudoku, sol:list=listsol) -> None
                 pass
             else:
                 if listsol[ligne][colonne]==int(valeur):
-                    cle.config(state="disabled")
+                    cle.config(state="disabled",disabledbackground="#BEFFB9")
                     del(listentry[cle])
                     print("aa")
                 else:
                     faux=Toplevel(fenetre)
                     faux.geometry("200x60")
-                    lab=Label(faux, text='Vous avez faux',font='impact',width=400)
+                    lab=Label(faux, text=listsol[ligne][colonne],font='impact',width=400)
                     lab.pack()
                     
                     
