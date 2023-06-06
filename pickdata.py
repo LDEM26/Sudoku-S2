@@ -29,7 +29,7 @@ def get_pseudo() -> list:
     """
     curseur.execute("SELECT pseudo FROM joueur")
     row = curseur.fetchall()
-    print(row, type(row))
+    return row, type(row)
 
 
 def get_mdp(pseudo: str):
@@ -38,7 +38,7 @@ def get_mdp(pseudo: str):
     """
     curseur.execute("SELECT mdp FROM Joueur WHERE pseudo='"+str(pseudo)+"'")
     row = curseur.fetchall()
-    print(row[0][0])
+    return row[0][0]
 
 
 def date_inscription(pseudo: str):
@@ -48,7 +48,7 @@ def date_inscription(pseudo: str):
     curseur.execute(
         "SELECT date_inscription FROM Joueur WHERE pseudo='"+str(pseudo)+"'")
     row = curseur.fetchall()
-    print(row[0][0])
+    return row[0][0]
 
 
 def set_grille_profil(idgrille: int, board: list, diff: float = 0, solution: list = None):
@@ -57,7 +57,7 @@ def set_grille_profil(idgrille: int, board: list, diff: float = 0, solution: lis
     """
     if solution == None:
         solution = "NULL"
-    curseur.execute("INSERT INTO grille VALUES ('"+str(idgrille) +
+    curseur.execute("INSERT INTO grille VALUES ('"+str(idgrille)+
                     "','"+str(board)+"','"+str(solution)+"','"+str(diff)+"')")
     db.commit()
 
@@ -68,7 +68,7 @@ def get_board(id: int):
     """
     curseur.execute("SELECT board FROM grille WHERE idgrille="+str(id)+"")
     row = curseur.fetchall()
-    print(row[0][0])
+    return row[0][0]
 
 
 def get_solution(id: int):
@@ -77,7 +77,7 @@ def get_solution(id: int):
     """
     curseur.execute("SELECT solution FROM grille WHERE idgrille="+str(id)+"")
     row = curseur.fetchall()
-    print(row[0][0])
+    return row[0][0]
 
 
 def get_nbparties(pseudo: str):
@@ -87,7 +87,7 @@ def get_nbparties(pseudo: str):
     curseur.execute(
         "SELECT nbparties FROM statistiques, joueur WHERE statistiques.idJoueur=joueur.idJoueur AND pseudo='"+str(pseudo)+"'")
     row = curseur.fetchall()
-    print(list(row[0][0]))
+    return list(row[0][0])
 
 
 def get_victoire(pseudo: str):
@@ -97,7 +97,18 @@ def get_victoire(pseudo: str):
     curseur.execute(
         "SELECT victoires FROM statistiques, joueur WHERE statistiques.idJoueur=joueur.idJoueur AND pseudo='"+str(pseudo)+"'")
     row = curseur.fetchall()
-    print(row[0][0])
+    return row[0][0]
+
+def increment_win(pseudo:str):                  # A tester 
+    """
+    Incrémente de 1 le nb de victoires
+    """
+    #win = get_victoire(pseudo)
+    #win += 1
+    #curseur.execute(
+    #    "UPDATE statistiques SET victoire = '"+str(win)+"' WHERE statistiques.idJoueur=joueur.idJoueur AND pseudo='"+str(pseudo)+"'")
+    #db.commit()
+
 
 
 def get_defaite(pseudo: str):
@@ -107,7 +118,7 @@ def get_defaite(pseudo: str):
     curseur.execute(
         "SELECT défaites FROM statistiques, joueur WHERE statistiques.idJoueur=joueur.idJoueur AND pseudo='"+str(pseudo)+"'")
     row = curseur.fetchall()
-    print(row[0][0])
+    return row[0][0]
 
 
 def get_nul(pseudo: str):
@@ -117,7 +128,7 @@ def get_nul(pseudo: str):
     curseur.execute(
         "SELECT nuls FROM statistiques, joueur WHERE statistiques.idJoueur=joueur.idJoueur AND pseudo='"+str(pseudo)+"'")
     row = curseur.fetchall()
-    print(row[0][0])
+    return row[0][0]
 
 
 def calc_ratio(pseudo: str):
@@ -127,8 +138,9 @@ def calc_ratio(pseudo: str):
     v = get_victoire(pseudo)
     d = get_defaite(pseudo)
     ratio = v/d
-    curseur.execute(
-        "INSERT INTO statistiques(ratiovd) VALUES ("+str(ratio)+")")
+    #curseur.execute(
+    #    "INSERT INTO statistiques(ratiovd) VALUES ("+str(ratio)+")")               FAUDRA FAIRE UN UPDATE
+    db.commit()
 
 
 def get_ratio(pseudo: str):
@@ -138,7 +150,7 @@ def get_ratio(pseudo: str):
     curseur.execute(
         "SELECT ratiovd FROM statistiques, joueur WHERE statistiques.idJoueur=joueur.idJoueur AND pseudo='"+str(pseudo)+"'")
     row = curseur.fetchall()
-    print(row[0][0])
+    return row[0][0]
 
 
 def set_user(pseudo: str, mdp: str):
@@ -205,7 +217,7 @@ get_defaite("Bg7")
 liste = [None, None, 9, None, None, None, None, 1, 4], [1, None, 4, None, None, None, 6, 5, 2], [None, 3, 5, None, 2, None, None, None, 8], [None, 5, 7, None, 3, 1, 2, 6, 9], [None, 6, None, None, None, None,
                                                                                                                                                                                 None, 3, None], [3, None, None, None, None, 2, None, 8, None], [None, None, 8, None, 9, None, None, 2, 1], [9, None, None, 7, None, None, 8, None, None], [None, 1, None, None, None, 8, None, None, None]
 # set_grille_profil("0",str(liste))
-# set_user("Bg8","mdpbien")
+#set_user("test","test")
 # set_profil_stat("Bg6")
 get_board(0)
 # print(verif_connexion("Bg7","mdpbien"))
@@ -215,5 +227,7 @@ curseur.execute(
 row = curseur.fetchall()
 print(row)
 print(verif_connexion('Bg7', 'mdpbien'))
+#increment_win("Bg7")
+#print(get_victoire("Bg7"))
 db.close()
 

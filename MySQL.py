@@ -1,5 +1,5 @@
 import mysql.connector
-from Credentials import Credentials
+from credentialsExample import Credentials
 
 class MySQL:
     
