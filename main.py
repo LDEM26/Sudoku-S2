@@ -4,7 +4,7 @@ Created on Fri May  5 15:30:23 2023
 
 @author: lydie
 """
-from fenetre1 import *
+from fenetre1cp import *
 from sudoku import *
 from tkinter import *
 from random import *
@@ -97,7 +97,7 @@ def jouer(sudoku:list = sudoku, diff:float = 0.5, taille:int = 3) -> None:
 
 
 
-s= sudo()
+s = sudo()
 sudoku=s[0]
 solution=s[1]
 
@@ -108,9 +108,5 @@ boutjouer = Button(framejouer, bg='#45e325', text='Jouer', fg='white', font='Imp
 boutjouer.grid()
 
 #récuperer les valeurs rentrées
-
-
-
-
 
 fenetre.mainloop()
