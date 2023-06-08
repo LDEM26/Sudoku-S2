@@ -2,7 +2,7 @@
 """
 Created on Fri May  5 15:30:23 2023
 
-@author: lydie
+@author: lydielabite
 """
 #from fenetre1 import *
 from sudoku import *
