@@ -10,7 +10,7 @@ from tkinter import *
 from random import *
 from time import *
 from tkinter import filedialog as TkFileDialog
-from fenetre1cp import *
+#from fenetre1cp import *
 from tkinter import messagebox as tkMessageBox
 
 
@@ -71,12 +71,17 @@ def sudo(taille:int = 3):
     return sudoku
         
 
-
+def abandonner():
+    frameabandonner.destroy()
+   # frameprincipale.destroy() #en commentaire pour l'instant mais dois a terme fonctioner
+    boutjouer.config(state="normal")
 
 
 #créer la grille, ce qui s'active quand on clique sur jouer
 def jouer(diff:float=0.5, taille:int=3) -> None:
 #grille de 9 carré gris
+    boutabandonner=Button(frameabandonner, bg="#FF3333", text='abandoner', fg='white', font='impact', command=abandonner)
+    boutabandonner.grid()
     boutjouer.config(state="disabled")
     sudo1=sudo()
     sudoku=sudo1.board
@@ -114,49 +119,46 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
             colonne=valcle[1]
             valeur=cle.get()
             if valeur== '':
-                pass
-            else:
-                if not listentry: boutjouer.config(state="normal")
-                    #clairement ne marche pas mais si on a suprimer toutes les valeur d'entry
+                pass                    
+                #clairement ne marche pas mais si on a suprimer toutes les valeur d'entry
                 #et donc que le
                 #jeu est terminer il faut ajouter plus 1 victoire dans la variable et Victoire et 
-                else:
-                    if listsol[ligne][colonne]==int(valeur):
-                        cle.config(state="disabled",disabledbackground="#BEFFB9")
-                        del(listentry[cle])
+            else :
+                if listsol[ligne][colonne]==int(valeur):
+                    cle.config(state="disabled",disabledbackground="#BEFFB9")
+                    del(listentry[cle])
+                    if len(lisentry)==0:
+                        boutjouer.config(state="normal")
+                            
                         
                 
                     
-                    else:
-                        global compteur
-                        compteur=compteur-1
-                        if compteur<1:
-                            boutjouer.config(state="normal")
+                else:
+                    global compteur
+                    compteur=compteur-1
+                    if compteur<1:
+                        boutjouer.config(state="normal")
                             #ajouter variable qui stock les vicctoire et les défaites
                         
                         
-                        else:
-                            faux=Toplevel(fenetre)
-                            faux.geometry("200x200")
-                            lab=Label(faux, text=f"Mauvaise Réponse il vous reste : {compteur} mauvaises réponses", font='impact',width=400)
-                            lab.pack()
+                    else:
+                        faux=Toplevel(fenetre)
+                        faux.geometry("200x200")
+                        lab=Label(faux, text=f"Mauvaise Réponse il vous reste : {compteur} mauvaises réponses", font='impact',width=400)
+                        lab.pack()
                     
                     
     fenetre.bind_all("<Return>", on_return)
     
 
 
-def abandonner():
-    frameabandonner.destroy()
-    #frameprincipale.destroy() en commentaire pour l'instant mais dois a terme fonctioner
-        
+
+    
 #bouton jouer
 boutjouer=Button(framejouer, bg='#45e325', text='Jouer', fg='white', font='Impact', command=jouer)
 boutjouer.grid()
 
-#bouton abandonner
-boutabandonner=Button(frameabandonner, bg="#FF3333", text='abandoner', fg='white', font='impact', command=abandonner)
-boutabandonner.grid()
+
 
 
 
