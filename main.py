@@ -9,8 +9,9 @@ from sudoku import *
 from tkinter import *
 from random import *
 from time import *
-
+from tkinter import filedialog as TkFileDialog
 from fenetre1cp import *
+from tkinter import messagebox as tkMessageBox
 
 
 
@@ -162,7 +163,7 @@ boutabandonner.grid()
 
 def sauve():
       myFormats =[('Fichier Texte','*.txt')]
-      fileName = tkFileDialog.asksaveasfilename(parent=fen,filetypes=myFormats,title='Enregistrer sous...')
+      fileName = TkFileDialog.asksaveasfilename(parent=fen,filetypes=myFormats,title='Enregistrer sous...')
       if fileName !='':
             f=open(fileName, 'w')
             f.write(str(grilleSudo))
@@ -179,7 +180,7 @@ def ouvrir():
     bactive.configure(state=DISABLED)
     bdesactive.configure(state=ACTIVE)
     myFormats =[('Fichier Texte','*.txt')]
-    fileOpen = tkFileDialog.askopenfilename(parent=fen,filetypes=myFormats,title='Choisir fichier')
+    fileOpen = TkFileDialog.askopenfilename(parent=fen,filetypes=myFormats,title='Choisir fichier')
     if fileOpen !='':
         f=open(fileOpen, 'r')
         grilleSudo=eval(f.read())
@@ -194,7 +195,7 @@ def ouvrirResolution():
     bactive.configure(state=DISABLED)
     bdesactive.configure(state=ACTIVE)
     myFormats =[('Fichier Texte','*.txt')]
-    fileOpen = tkFileDialog.askopenfilename(parent=fen,filetypes=myFormats,title='Choisir fichier')
+    fileOpen = TkFileDialog.askopenfilename(parent=fen,filetypes=myFormats,title='Choisir fichier')
     if fileOpen !='':
         f=open(fileOpen, 'r')
         grilleSudo=eval(f.read())
