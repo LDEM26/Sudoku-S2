@@ -12,6 +12,7 @@ from time import *
 from tkinter import filedialog as TkFileDialog
 from fenetre1cp import *
 from tkinter import messagebox as tkMessageBox
+#from chrono import *
 
 
 
@@ -81,6 +82,7 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
     sudo1=sudo()
     sudoku=sudo1.board
     solution=sudo1.solve()
+    #Chrono()
     listsol=solution.board
     lab=[] #liste contenant les labels
     frameprincipale=Frame(fenetre)
@@ -89,8 +91,7 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
         for i in range(9):
             l=Label(frameprincipale,bg='#858585',width=4,height=2,relief="groove",borderwidth=4)
             l.grid(row=i,column=j)
-            lab.append([l,(j,i)])
-    
+            lab.append([l,(j,i)])    
     listentry={}
 
 
