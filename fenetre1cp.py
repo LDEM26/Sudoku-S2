@@ -5,13 +5,15 @@ Created on Mon May 22 11:22:08 2023
 @author: lydie
 """
 
-from CredentialsCtxRessources.CredentialsCtx import *
-from Player import *
+from tkinter import *
+from MySQL import MySQL
+from CredentialsCtxRessources.LoginCtx import LoginCtx
+from Player import Player
 
-cred = CredentialsCtx()
-cred.generate()
+credentials_ctx = LoginCtx()
+credentials_ctx.generate()
 
-if cred.get_connected() == False:
+if credentials_ctx.get_connected() == False:
     raise RuntimeError("Impossible de se connecter")
 
-user = Player(cred.get_connected()[0], cred.get_connected()[1])
+user = Player(credentials_ctx.get_connected()[0], credentials_ctx.get_connected()[1])

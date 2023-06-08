@@ -1,8 +1,9 @@
 import mysql.connector
-from credentialsExample import Credentials
+from Credentials import Credentials
+
 
 class MySQL:
-    
+
     @staticmethod
     def connect():
         """
@@ -15,9 +16,9 @@ class MySQL:
             database=Credentials.get_database()
         )
         return db
-    
+
     @staticmethod
-    def askAll(query: str):
+    def askAll(query: str, withCursor: bool = False):
         """
         Permet d'envoyer une requête à la BDD
         """
@@ -26,10 +27,10 @@ class MySQL:
         curseur.execute(query)
         res = curseur.fetchall()
         db.close()
-        return res
-    
+        return {"res": res, "cursor": curseur} if withCursor else res
+
     @staticmethod
-    def askOne(query: str):
+    def askOne(query: str, withCursor: bool = False):
         """
         Permet d'envoyer une requête à la BDD
         """
@@ -38,10 +39,10 @@ class MySQL:
         curseur.execute(query)
         res = curseur.fetchone()
         db.close()
-        return res
-    
+        return {"res": res, "cursor": curseur} if withCursor else res
+
     @staticmethod
-    def askNoReturn(query: str):
+    def askNoReturn(query: str, withCursor: bool = False):
         """
         Permet d'envoyer une requête à la BDD
         """
@@ -50,3 +51,5 @@ class MySQL:
         curseur.execute(query)
         db.commit()
         db.close()
+        if withCursor:
+            return curseur

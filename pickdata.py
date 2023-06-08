@@ -153,38 +153,6 @@ def get_ratio(pseudo: str):
     return row[0][0]
 
 
-def set_user(pseudo: str, mdp: str):
-    """
-    Créer un nouvel utilisateur avec son profil statistiques, uniquement avec le pseudo et le mot de passe.
-    Fait la vérification de l'unicité du pseudo.
-    """
-    if verif_pseudo_unique(pseudo, mdp) == True:  # vérifie l'unicité du pseudo
-        date = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-        curseur.execute("INSERT INTO joueur(idJoueur, pseudo, mdp, date_inscription) VALUES (NULL, '" +
-                        str(pseudo)+"', '"+str(mdp)+"', '"+str(date)+"')")
-        db.commit()  # Envoie à la BDD le profil du joueur
-        id = curseur.execute(
-            "SELECT idJoueur FROM joueur WHERE pseudo='"+str(pseudo)+"'")
-        row = curseur.fetchall()  # Prend le nouvel id du joueur
-        curseur.execute("INSERT INTO statistiques VALUES ('" +
-                        str(row[0][0])+"', '0', '0', '0', '0', '0', NULL)")
-        db.commit()  # Créer son profil de statistiques
-
-
-def verif_pseudo_unique(pseudo: str, mdp: str):
-    """
-    Vérifie que le pseudo est unique
-    """
-    try:
-        date = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-        curseur.execute("INSERT INTO joueur(idJoueur, pseudo, mdp, date_inscription) VALUES (NULL, '" +
-                        str(pseudo)+"', '"+str(mdp)+"', '"+str(date)+"')")
-        db.commit()
-        return True
-    except:
-        return "Le pseudo existe déjà."
-
-
 def verif_connexion(pseudo: str, mdp: str):
     """
     Vérifie si l'utilisateur est le bon et le mdp aussi

@@ -1,10 +1,7 @@
 from tkinter import *
 from MySQL import MySQL
-from CredentialsCtxRessources.CredentialsCtxException import CredentialsCtxException
 
-
-class CredentialsCtx:
-    
+class BaseCtx:
     ctx: Tk = None
     pswd: Entry = None
     usr: Entry = None
@@ -12,12 +9,16 @@ class CredentialsCtx:
 
     def __init__(self, ctx: Tk = None):
         self.ctx = ctx
+        
+    def show_error(self, message):
+        error_label = Label(self.ctx, text=message, fg="red")
+        error_label.pack()
 
     def generate(self):
         if self.ctx == None:
             self.ctx = Tk()
             self.ctx.geometry('800x500')
-            self.ctx.title("Connection")
+            self.ctx.title(self.get_title())
         frame = Frame(self.ctx, width=100, height=0)
         frame.place(x=350, y=100)
 
@@ -37,8 +38,6 @@ class CredentialsCtx:
 
         self.error_label = Label(self.ctx, text="", fg="red")
         self.error_label.pack()
-
-        self.ctx.mainloop()
 
     def get_ctx(self) -> Tk:
         return self.ctx
@@ -71,3 +70,6 @@ class CredentialsCtx:
 
     def get_connected(self):
         return self.connected
+
+    def get_title(self):
+        raise NotImplementedError("La méthode get_title doit être implémentée dans la classe enfant.")
