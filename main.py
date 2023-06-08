@@ -10,6 +10,8 @@ from tkinter import *
 from random import *
 from time import *
 
+from fenetre1cp import *
+
 
 
 #création fenetre principale
@@ -152,7 +154,7 @@ boutjouer=Button(framejouer, bg='#45e325', text='Jouer', fg='white', font='Impac
 boutjouer.grid()
 
 #bouton abandonner
-boutabandonner=Button(frameabandonner, bg="#FF3333", text='abandoner', fg='white', font='impact', commande=abandonner)
+boutabandonner=Button(frameabandonner, bg="#FF3333", text='abandoner', fg='white', font='impact', command=abandonner)
 boutabandonner.grid()
 
 

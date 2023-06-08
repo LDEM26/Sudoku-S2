@@ -56,7 +56,7 @@ class RegistrationCtx(BaseCtx):
 
     @staticmethod
     def set_user(pseudo: str, mdp: str):
-        if RegistrationCtx.verif_pseudo_unique(pseudo, mdp):
+        if RegistrationCtx.verif_pseudo_unique(pseudo):
             date = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
             res = MySQL.askNoReturn(f"INSERT INTO joueur(idJoueur, pseudo, mdp, date_inscription) VALUES (NULL, '{pseudo}', '{mdp}', '{date}')", True)
             last_id = res.lastrowid
