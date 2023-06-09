@@ -2,7 +2,7 @@
 """
 Created on Fri May  5 15:30:23 2023
 
-@author: lydielabite
+@author: lydie
 """
 #from fenetre1 import *
 from sudoku import *
@@ -10,9 +10,11 @@ from tkinter import *
 from random import *
 from time import *
 from tkinter import filedialog as TkFileDialog
-#from fenetre1cp import *
+from fenetre1cp import *
 from tkinter import messagebox as tkMessageBox
-from chrono import *
+from MySQL import *
+from Player import *
+
 
 
 
@@ -82,6 +84,9 @@ def abandonner():
     gameover.geometry("500x160")
     lab3=Label(gameover, text="GAME OVER", font=('impact',50), fg='red')
     lab3.pack()
+    defaite = MySQL.askOne("SELECT défaites FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'") 
+    print(defaite[0])
+    MySQL.askNoReturn("UPDATE statistiques SET défaites='"+str(defaite[0]+1)+"'")    #Incrémente le nombre de défaites
         
 
 
@@ -96,7 +101,6 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
     sudo1=sudo()
     sudoku=sudo1.board
     solution=sudo1.solve()
-    #Chrono()
     listsol=solution.board
     global lab
     lab=[] #liste contenant les labels
