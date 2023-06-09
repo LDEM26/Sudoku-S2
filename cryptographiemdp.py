@@ -36,20 +36,18 @@ def decrypter_mot_de_passe(cle, mot_de_passe_crypte):
 
 
 # Générer une clé
-cle = generer_cle()
+#cle = generer_cle()
 
 # Sauvegarder la clé dans un fichier
-sauvegarder_cle(cle, 'cle.txt')
+#sauvegarder_cle(cle, 'cle.txt')
 
 # Charger la clé à partir du fichier
-cle_chargee = charger_cle('cle.txt')
 
-mot_de_passe_original = "MotDePasse123"
-
-mot_de_passe_crypte = crypter_mot_de_passe(cle_chargee, mot_de_passe_original)
-
+"""
+cle_chargee = charger_cle('cle.txt')        #Récup clé
+mot_de_passe_original = "MotDePasse123"     #Ex clé
+mot_de_passe_crypte = crypter_mot_de_passe(cle_chargee, mot_de_passe_original)      #Dans MySQL, on comparera avec le crypté.
 print("Mot de passe crypté :", mot_de_passe_crypte)
-
-mot_de_passe_decrypte = decrypter_mot_de_passe(cle_chargee, mot_de_passe_crypte)
-
+mot_de_passe_decrypte = decrypter_mot_de_passe(cle_chargee, mot_de_passe_crypte)    #Useless pour nous en théorie
 print("Mot de passe décrypté :", mot_de_passe_decrypte)
+"""
