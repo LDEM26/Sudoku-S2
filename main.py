@@ -25,21 +25,21 @@ fenetre.geometry('1000x600+100+10')
 
 
 #frame pour choisir la difficulté
-framediff= Frame (fenetre, bg='#f1d7f3', width=100,height=0)
+framediff= Frame (fenetre, width=100,height=0)
 framediff.place(x=10, y=20)
 
 
 #label dans le frame de la diff pour le title
-titre1=Label(framediff,bg='#f1d7f3', text='Difficulté',width=20)
+titre1=Label(framediff,bg='white', text='Difficulté',width=20)
 titre1.pack()
 
 #curseur pour la diff
-diff=Scale(framediff,orient='horizontal', from_ =1, to =9)
+diff=Scale(framediff,orient='horizontal',bg='white', from_ =1, to =9)
 diff.pack()
 
 
 #frame bouton jouer
-framejouer=Frame(fenetre, bg='red')
+framejouer=Frame(fenetre)
 framejouer.place(x=200, y=30)
 
 #frame bouton abandonner
@@ -208,7 +208,7 @@ boutjouer.grid()
 canvas = Canvas(fenetre, width=300, height=300, bg='ivory', borderwidth=0, highlightthickness=0)
 canvas.place(x=60,y=150)
 
-canvas.create_text(150, 20, text= "Info joueur",fill="black",font=('Helvetica 12 bold italic'))
+canvas.create_text(150, 20, text= "Info joueur",fill="black",font=('Helvetica 12 bold italic underline'))
 canvas.create_text(70, 60, text= "Partie gagnées :",fill="black",font=('arial 11'))
 canvas.create_text(70, 90, text= "Partie perdues :",fill="black",font=('arial 11'))
 canvas.create_text(70, 120, text= "Points :",fill="black",font=('arial 11 '))
