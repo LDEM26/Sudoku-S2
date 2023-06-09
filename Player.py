@@ -1,3 +1,6 @@
+"""
+Class du joueur connecté, donne toutes les informations sur ce joueur
+"""
 class Player():
     idJoueur:int = None
     pseudo:str = None

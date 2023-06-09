@@ -4,15 +4,15 @@ Created on Fri May  5 15:30:23 2023
 
 @author: lydie
 """
-#from fenetre1 import *
+
 from sudoku import *
 from tkinter import *
 from random import *
 from time import *
 from tkinter import filedialog as TkFileDialog
-#from fenetre1cp import *
+from fenetre1cp import *
 from tkinter import messagebox as tkMessageBox
-#from MySQL import *
+from MySQL import *
 from Player import *
 
 
@@ -165,7 +165,6 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
             colonne=valcle[1]
             valeur=cle.get()
             if valeur== '':
-                #gagne()    Ne marche pas, ce n'est pas une victoire ici.
                 pass                    
                 #clairement ne marche pas mais si on a suprimer toutes les valeur d'entry
                 #et donc que le
@@ -179,6 +178,7 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
                         gagne.geometry("500x160+380+190")
                         lab4=Label(gagne, text="PARTIE GAGNE", font=('impact',50), fg='green')
                         lab4.pack()
+                        gagne()
                     del(listentry[cle])
                 else:
                     global compteur

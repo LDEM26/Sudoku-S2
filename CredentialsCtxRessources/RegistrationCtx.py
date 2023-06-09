@@ -2,6 +2,7 @@ from CredentialsCtxRessources.BaseCtx import BaseCtx
 from tkinter import Button, Frame, Label, Entry, Toplevel
 from datetime import datetime
 from MySQL import MySQL
+from cryptographiemdp import *
 
 
 class RegistrationCtx(BaseCtx):
@@ -56,9 +57,11 @@ class RegistrationCtx(BaseCtx):
 
     @staticmethod
     def set_user(pseudo: str, mdp: str):
+        #cle_chargee = charger_cle('cle.txt')               non fonctionnel.
         if RegistrationCtx.verif_pseudo_unique(pseudo):
+            #print(crypter_mot_de_passe(cle_chargee, mdp))
             date = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-            res = MySQL.askNoReturn(f"INSERT INTO joueur(idJoueur, pseudo, mdp, date_inscription) VALUES (NULL, '{pseudo}', '{mdp}', '{date}')", True)
+            res = MySQL.askNoReturn(f"INSERT INTO joueur(idJoueur, pseudo, mdp, date_inscription) VALUES (NULL, '{pseudo}', '{mdp}', '{date}')", True) #cryptage non fonctionnel
             last_id = res.lastrowid
             MySQL.askNoReturn(f"INSERT INTO statistiques VALUES ({last_id}, 0, 0, 0, 0, 0, NULL, 0)")
             return True
@@ -71,3 +74,4 @@ class RegistrationCtx(BaseCtx):
 
     def show_error(self, message):
         self.error_label.config(text=message)
+
