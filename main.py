@@ -12,7 +12,7 @@ from time import *
 from tkinter import filedialog as TkFileDialog
 #from fenetre1cp import *
 from tkinter import messagebox as tkMessageBox
-#from chrono import *
+from chrono import *
 
 
 
@@ -73,22 +73,32 @@ def sudo(taille:int = 3):
         
 
 def abandonner():
-    frameabandonner.destroy()
+    Button.destroy(boutabandonner)
    # frameprincipale.destroy() #en commentaire pour l'instant mais dois a terme fonctioner
     boutjouer.config(state="normal")
+    for cle in listentry:
+        cle.config(state='disable',disabledbackground="#ff556c")
+    gameover=Toplevel(fenetre)
+    gameover.geometry("500x160")
+    lab3=Label(gameover, text="GAME OVER", font=('impact',50), fg='red')
+    lab3.pack()
+        
 
 
 #créer la grille, ce qui s'active quand on clique sur jouer
 def jouer(diff:float=0.5, taille:int=3) -> None:
 #grille de 9 carré gris
+    #bouton jouer
+    boutjouer.config(state="disabled")
+    global boutabandonner
     boutabandonner=Button(frameabandonner, bg="#FF3333", text='abandoner', fg='white', font='impact', command=abandonner)
     boutabandonner.grid()
-    boutjouer.config(state="disabled")
     sudo1=sudo()
     sudoku=sudo1.board
     solution=sudo1.solve()
     #Chrono()
     listsol=solution.board
+    global lab
     lab=[] #liste contenant les labels
     frameprincipale=Frame(fenetre)
     frameprincipale.place(x=500, y=170)
@@ -97,6 +107,7 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
             l=Label(frameprincipale,bg='#858585',width=4,height=2,relief="groove",borderwidth=4)
             l.grid(row=i,column=j)
             lab.append([l,(j,i)])    
+    global listentry
     listentry={}
 
 
@@ -113,7 +124,7 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
     
    # boucle infini
     def on_return(event):
-    
+        
         for cle in listentry:
             valcle=listentry[cle]
             ligne=valcle[0]
@@ -127,27 +138,26 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
             else :
                 if listsol[ligne][colonne]==int(valeur):
                     cle.config(state="disabled",disabledbackground="#BEFFB9")
+                    if len(listentry)==1:
+                        boutjouer.config(state='normal')
+                        gagne=Toplevel(fenetre)
+                        gagne.geometry("500x160")
+                        lab4=Label(gagne, text="PARTIE GAGNE", font=('impact',50), fg='green')
+                        lab4.pack()
                     del(listentry[cle])
-                    if len(lisentry)==0:
-                        boutjouer.config(state="normal")
-                            
-                        
-                
-                    
                 else:
                     global compteur
                     compteur=compteur-1
                     if compteur<1:
                         boutjouer.config(state="normal")
+                        abandonner()
                             #ajouter variable qui stock les vicctoire et les défaites
-                        
-                        
                     else:
                         faux=Toplevel(fenetre)
                         faux.geometry("200x200")
                         lab=Label(faux, text=f"Mauvaise Réponse il vous reste : {compteur} mauvaises réponses", font='impact',width=400)
                         lab.pack()
-                    
+        
                     
     fenetre.bind_all("<Return>", on_return)
     
