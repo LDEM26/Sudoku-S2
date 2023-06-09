@@ -10,9 +10,9 @@ from tkinter import *
 from random import *
 from time import *
 from tkinter import filedialog as TkFileDialog
-from fenetre1cp import *
+#from fenetre1cp import *
 from tkinter import messagebox as tkMessageBox
-from MySQL import *
+#from MySQL import *
 from Player import *
 
 
@@ -117,11 +117,29 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
     lab=[] #liste contenant les labels
     frameprincipale=Frame(fenetre)
     frameprincipale.place(x=500, y=170)
+    blanc=0
+    nbcolumn=0
     for j in range(9):
+        nbrow=0
         for i in range(9):
             l=Label(frameprincipale,bg='#858585',width=4,height=2,relief="groove",borderwidth=4)
-            l.grid(row=i,column=j)
-            lab.append([l,(j,i)])    
+            l.grid(row=nbrow,column=nbcolumn)
+            lab.append([l,(j,i)]) 
+            blanc+=1
+            if blanc%3==0:
+                nbrow+=1
+                lablanc=Label(frameprincipale,  text='')
+                lablanc.grid(row=nbrow,column=nbcolumn)
+            nbrow+=1
+        if blanc==27 or blanc==54:
+            for it in range(11):
+                nbcolumn+=1
+                lablanc2=Label(frameprincipale, text='')
+                lablanc.grid(row=nbrow,column=nbcolumn)
+        nbcolumn+=1
+            
+            
+            
     global listentry
     listentry={}
 
