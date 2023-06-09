@@ -1,5 +1,6 @@
 from tkinter import *
 from MySQL import MySQL
+from cryptographiemdp import *
 
 class BaseCtx:
     ctx: Tk = None
@@ -54,13 +55,14 @@ class BaseCtx:
     def check(self):
         usr = self.get_usr()
         pswd = self.get_pswd()
+        #cle = charger_cle('cle.txt')
 
         passwd = MySQL.askOne(f"SELECT idJoueur, mdp FROM joueur WHERE pseudo = '{usr}'")
         if passwd is None:
             self.show_error("L'utilisateur n'existe pas")
             return
 
-        if passwd[1] != pswd:
+        if passwd[1] != pswd:          #decryptage non fonctionnel à inserer.
             self.show_error("Le mot de passe est incorrect")
             return
 
