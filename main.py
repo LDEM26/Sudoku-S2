@@ -84,10 +84,21 @@ def abandonner():
     gameover.geometry("500x160")
     lab3=Label(gameover, text="GAME OVER", font=('impact',50), fg='red')
     lab3.pack()
+    perdu()
+
+def perdu() :
+    """
+    Le joueur a perdu, on ajout 1 au compteur de défaite sur la BDD
+    """
     defaite = MySQL.askOne("SELECT défaites FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'") 
-    print(defaite[0])
-    MySQL.askNoReturn("UPDATE statistiques SET défaites='"+str(defaite[0]+1)+"'")    #Incrémente le nombre de défaites
+    MySQL.askNoReturn("UPDATE statistiques SET défaites='"+str(defaite[0]+1)+"' WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")    #Incrémente le nombre de défaites
         
+def gagne():
+    """
+    Le joueur a gagné, on ajout 1 au compteur de défaite sur la BDD
+    """
+    defaite = MySQL.askOne("SELECT victoires FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'") 
+    MySQL.askNoReturn("UPDATE statistiques SET victoires='"+str(defaite[0]+1)+"' WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")    #Incrémente le nombre de victoires
 
 
 #créer la grille, ce qui s'active quand on clique sur jouer
@@ -135,6 +146,7 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
             colonne=valcle[1]
             valeur=cle.get()
             if valeur== '':
+                #gagne()    Ne marche pas, ce n'est pas une victoire ici.
                 pass                    
                 #clairement ne marche pas mais si on a suprimer toutes les valeur d'entry
                 #et donc que le
@@ -309,8 +321,8 @@ def menuAPropos():
 
 def stop_quit():
     if tkMessageBox.askokcancel("Quitter", "Voulez vous vraiment quitter ?"):
-        fen.quit()
-        fen.destroy()
+        fenetre.quit()
+        fenetre.destroy()
 
 
 barreDeMenus=Menu(fenetre)                                                             
