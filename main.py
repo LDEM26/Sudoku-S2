@@ -92,9 +92,8 @@ def sudo(taille:int = 3):
     return sudoku
         
 
-def abandonner():
+def abandonner(tex=''):
     Button.destroy(boutabandonner)
-   # frameprincipale.destroy() #en commentaire pour l'instant mais dois a terme fonctioner
     boutjouer.config(state="normal")
     for cle in listentry:
         cle.config(state='disable',disabledbackground="#ff556c")
@@ -102,6 +101,9 @@ def abandonner():
     gameover.geometry("500x160+380+190")
     lab3=Label(gameover, text="GAME OVER", font=('impact',50), fg='red')
     lab3.pack()
+    if tex!='':
+        lab4=Label(gameover, text=tex, font=("Times New Roman", 20))
+        lab4.pack()
     perdu()
     maj_ratio(Player.get_idJoueur(user))
     maj_classement()
@@ -139,14 +141,9 @@ def tempo(tc):
     if tc:
         fenetre.after(1000, lambda: tempo(tc-1))
     else:
-        abandonner()
+        ecouler='Temps écoulé'
+        abandonner(ecouler)
         
-
-
-    
-
-
-
 
 
 #créer la grille, ce qui s'active quand on clique sur jouer
@@ -157,7 +154,7 @@ def jouer(taille:int=3) -> None:
     label_compte_a_rebours = Label(frame_compte_a_rebours, font=("Arial", 18))
     label_compte_a_rebours.pack()
     diffi=(diff.get())
-    temps=120+20*(diffi-1)
+    temps=90+20*(diffi-1)
     tempo(temps)
     #bouton jouer
     boutjouer.config(state="disabled")
