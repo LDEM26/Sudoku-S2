@@ -223,6 +223,9 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
                 if listsol[ligne][colonne]==int(valeur):
                     cle.config(state="disabled",disabledbackground="#BEFFB9")
                     if len(listentry)==1:
+                        gagner()
+                        maj_ratio(Player.get_idJoueur(user))
+                        maj_classement() 
                         boutabandonner.destroy()
                         boutjouer.config(state='normal')
                         gagne=Toplevel(fenetre)
@@ -230,9 +233,7 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
                         lab4=Label(gagne, text="PARTIE GAGNE", font=('impact',50), fg='green')
                         lab4.pack()
                         boutok=Button(gagne,text='ok', command=exit_btn)
-                        gagner()
-                        maj_ratio(Player.get_idJoueur(user))
-                        maj_classement()
+                       
                         
                     del(listentry[cle])
                 else:
