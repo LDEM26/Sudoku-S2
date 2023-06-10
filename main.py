@@ -108,6 +108,12 @@ def abandonner(tex=''):
     maj_ratio(Player.get_idJoueur(user))
     maj_classement()
     label_compte_a_rebours.destroy()
+    pperd2.destroy()
+    pperd3=Label(info,text= nb_def(),fg="black",bg='ivory',font=('arial 11'))
+    pperd3.grid(row=2,column=1)
+    classement2.destroy()
+    classement3=Label(info,text= get_classement(),fg="black",bg='ivory',font=('arial 11'))
+    classement3.grid(row=5,column=1)
 
 def perdu() :
     """
@@ -234,6 +240,12 @@ def jouer(taille:int=3) -> None:
                         lab4=Label(gagne, text="PARTIE GAGNE", font=('impact',50), fg='green')
                         lab4.pack()
                         label_compte_a_rebours.destroy()
+                        pgagne2.destroy()
+                        pgagne3=Label(info,text= nb_vict(),fg="black",bg='ivory',font=('arial 11'))
+                        pgagne3.grid(row=1,column=1)
+                        classement2.destroy()
+                        classement3=Label(info,text= get_classement(),fg="black",bg='ivory',font=('arial 11'))
+                        classement3.grid(row=5,column=1)
                         
                     del(listentry[cle])
                 else:
@@ -248,6 +260,14 @@ def jouer(taille:int=3) -> None:
                         faux.geometry("400x200+380+190")
                         lab=Label(faux, text=f"Mauvaise Réponse \n\n Il vous reste {compteur} vie(s)", font='arial',width=400)
                         lab.pack()
+        #maj nombre de vie
+        viereste2.destroy()
+        viereste3=Label(info,text= compteur,fg="black",bg='ivory',font=('arial 11'))
+        viereste3.grid(row=4,column=1)
+    pjoue2.destroy()
+    pjoue3=Label(info,text= nb_parties(),fg="black",bg='ivory',font=('arial 11'))
+    pjoue3.grid(row=3,column=1)
+   
                         
     fenetre.bind_all("<Return>", on_return)
 
@@ -284,16 +304,35 @@ def get_classement():
     classem= MySQL.askOne("SELECT classement FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")
     return classem[0]
 
-canvas = Canvas(fenetre, width=300, height=300, bg='ivory', borderwidth=0, highlightthickness=0)
-canvas.place(x=60,y=150)
+info=Frame(fenetre, width=500, height=400, bg='ivory')
+info.place(x=60,y=150)
 
 #####################Affichage statistiques##########################
-canvas.create_text(150, 20, text= "Info joueur",fill="black",font=('Helvetica 12 bold italic underline'))
-canvas.create_text(70, 60, text= f"Partie gagnées : {nb_vict()}",fill="black",font=('arial 11'))
-canvas.create_text(70, 90, text= f"Partie perdues : {nb_def()}",fill="black",font=('arial 11'))
-canvas.create_text(70, 120, text= f"Parties joués : {nb_parties()}",fill="black",font=('arial 11 '))
-canvas.create_text(70, 150, text=f"Vie restante : {compteur}",fill="black",font=('arial 11'))
-canvas.create_text(70, 180, text= f"Classement : {get_classement()}",fill="black",font=('arial 11 '))
+infojoueur=Label(info,text= "Info joueur \n",fg="black",bg='ivory',font=('Helvetica 12 bold italic underline'))
+infojoueur.grid(row=0,column=0)
+pgagne=Label(info,text= "Parties gagnées :",fg="black",bg='ivory',font=('arial 11'))
+pgagne.grid(row=1,column=0)
+pperd=Label(info,text= "Parties perdues :",fg="black",bg='ivory',font=('arial 11'))
+pperd.grid(row=2,column=0)
+pjoue=Label(info,text= "Parties jouées :",fg="black",bg='ivory',font=('arial 11'))
+pjoue.grid(row=3,column=0)
+viereste=Label(info,text= "Vie restante : ",fg="black",bg='ivory',font=('arial 11'))
+viereste.grid(row=4,column=0)
+classement=Label(info,text= "Classement : ",fg="black",bg='ivory',font=('arial 11'))
+classement.grid(row=5,column=0)
+
+
+pgagne2=Label(info,text= nb_vict(),fg="black",bg='ivory',font=('arial 11'))
+pgagne2.grid(row=1,column=1)
+pperd2=Label(info,text= nb_def(),fg="black",bg='ivory',font=('arial 11'))
+pperd2.grid(row=2,column=1)
+pjoue2=Label(info,text= nb_parties(),fg="black",bg='ivory',font=('arial 11'))
+pjoue2.grid(row=3,column=1)
+viereste2=Label(info,text= compteur,fg="black",bg='ivory',font=('arial 11'))
+viereste2.grid(row=4,column=1)
+classement2=Label(info,text= get_classement(),fg="black",bg='ivory',font=('arial 11'))
+classement2.grid(row=5,column=1)
+
 
 
 def sauve():
