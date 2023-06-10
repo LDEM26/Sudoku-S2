@@ -4,7 +4,7 @@ from Player import *
 def maj_ratio(player):
     defaite = MySQL.askOne("SELECT défaites FROM statistiques WHERE idJoueur='"+str(player)+"'")
     victoire = MySQL.askOne("SELECT victoires FROM statistiques WHERE idJoueur='"+str(player)+"'")
-    if defaite == 0 :
+    if defaite[0] == 0 :
         MySQL.askNoReturn("UPDATE statistiques SET ratiovd='"+str(victoire[0])+"' WHERE idJoueur='"+str(player)+"'")
     else :    
         MySQL.askNoReturn("UPDATE statistiques SET ratiovd='"+str(victoire[0]/defaite[0])+"' WHERE idJoueur='"+str(player)+"'")

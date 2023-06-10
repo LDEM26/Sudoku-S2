@@ -46,12 +46,13 @@ framejouer.place(x=200, y=30)
 frameabandonner=Frame(fenetre)
 frameabandonner.place(x=300, y=30)
 
-
+#Création de la frame pour afficher le compte à rebours
+frame_compte_a_rebours = Frame(fenetre)
+frame_compte_a_rebours.place(x=570, y=15)
 
 
 #compteur de vie
 compteur = 3
-
 
     
 #Durée du compte à rebours en secondes
@@ -59,34 +60,8 @@ duree = 3 * 60  # 3 minutes
 
     
 
-#Fonction pour mettre à jour le compte à rebours
-def mettre_a_jour_compte_a_rebours():
-        temps_ecoule = int(time.time() - temps_debut)
-        temps_restant = max(duree - temps_ecoule, 0)
-        minutes = temps_restant // 60
-        secondes = temps_restant % 60
-        temps_texte = f"Temps restant : {minutes:02d}:{secondes:02d}"
-        label_compte_a_rebours.config(text=temps_texte)
-        if temps_ecoule < duree:
-            fenetre.after(1000, mettre_a_jour_compte_a_rebours)
-        else:
-            abandonner()
 
 
-#Création de la frame pour afficher le compte à rebours
-frame_compte_a_rebours = Frame(fenetre)
-frame_compte_a_rebours.place(x=570, y=15)
-    
-#Création du label pour afficher le compte à rebours
-label_compte_a_rebours = Label(frame_compte_a_rebours, text="Temps restant : 03:00", font=("Arial", 18))
-label_compte_a_rebours.pack()
-
-
-#Début du compte à rebours
-#temps_debut = time.time()
-#Démarrage de la mise à jour du compte à rebours
-fenetre.after(1000, mettre_a_jour_compte_a_rebours)
-    
 
 
 
@@ -147,7 +122,31 @@ def gagner():
 
 
 
+#Fonction pour mettre à jour le compte à rebours
+def mettre_a_jour_compte_a_rebours():
+        temps_ecoule = int(time.time() - temps_debut)
+        temps_restant = max(duree - temps_ecoule, 0)
+        minutes = temps_restant // 60
+        secondes = temps_restant % 60
+        temps_texte = f"Temps restant : {minutes:02d}:{secondes:02d}"
+        label_compte_a_rebours.config(text=temps_texte)
+        if temps_ecoule < duree:
+            fenetre.after(1000, mettre_a_jour_compte_a_rebours)
+        else:
+            abandonner()
 
+
+    
+#Création du label pour afficher le compte à rebours
+label_compte_a_rebours = Label(frame_compte_a_rebours, text="Temps restant : 03:00", font=("Arial", 18))
+label_compte_a_rebours.pack()
+
+
+#Début du compte à rebours
+temps_debut = time()
+#Démarrage de la mise à jour du compte à rebours
+fenetre.after(1000, mettre_a_jour_compte_a_rebours)
+    
 
 
 #créer la grille, ce qui s'active quand on clique sur jouer
@@ -200,7 +199,7 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
         label=l[0]
         texte=str(remplir(sudoku)[0])
         if texte=='0':
-            entree=Entry(label, bg='#a1a1a1',cursor='cross')
+            entree=Entry(label, bg='#a1a1a1',cursor='cross', justify='center')
             entree.place(width=44,height=45)
             listentry[entree]=l[1]
         else:
@@ -224,6 +223,7 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
                 if listsol[ligne][colonne]==int(valeur):
                     cle.config(state="disabled",disabledbackground="#BEFFB9")
                     if len(listentry)==1:
+                        boutabandonner.destroy()
                         boutjouer.config(state='normal')
                         gagne=Toplevel(fenetre)
                         gagne.geometry("500x160+380+190")
@@ -233,6 +233,7 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
                         gagner()
                         maj_ratio(Player.get_idJoueur(user))
                         maj_classement()
+                        
                     del(listentry[cle])
                 else:
                     global compteur
