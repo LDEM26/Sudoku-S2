@@ -105,6 +105,7 @@ def abandonner():
     perdu()
     maj_ratio(Player.get_idJoueur(user))
     maj_classement()
+    label_compte_a_rebours.destroy()
 
 def perdu() :
     """
@@ -143,17 +144,21 @@ def tempo(tc):
 
 
     
-#Création du label pour afficher le compte à rebours
-label_compte_a_rebours = Label(frame_compte_a_rebours, font=("Arial", 18))
-label_compte_a_rebours.pack()
+
 
 
 
 
 #créer la grille, ce qui s'active quand on clique sur jouer
-def jouer(diff:float=0.5, taille:int=3) -> None:
+def jouer(taille:int=3) -> None:
 #grille de 9 carré gris
-    tempo(180)
+    global label_compte_a_rebours
+    #Création du label pour afficher le compte à rebours
+    label_compte_a_rebours = Label(frame_compte_a_rebours, font=("Arial", 18))
+    label_compte_a_rebours.pack()
+    diffi=(diff.get())
+    temps=120+20*(diffi-1)
+    tempo(temps)
     #bouton jouer
     boutjouer.config(state="disabled")
     global boutabandonner
@@ -231,8 +236,7 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
                         gagne.geometry("500x160+380+190")
                         lab4=Label(gagne, text="PARTIE GAGNE", font=('impact',50), fg='green')
                         lab4.pack()
-                        boutok=Button(gagne,text='ok', command=exit_btn)
-                       
+                        label_compte_a_rebours.destroy()
                         
                     del(listentry[cle])
                 else:
