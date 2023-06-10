@@ -20,7 +20,7 @@ class RegistrationCtx(BaseCtx):
         r = self.set_user(usr, pswd)
         if r:
             self.ctx.destroy()
-            super().set_connected(id, usr)
+            super().set_connected(r[1], usr)
             return True
         else:
             self.show_error("L'utilisateur existe déjà")

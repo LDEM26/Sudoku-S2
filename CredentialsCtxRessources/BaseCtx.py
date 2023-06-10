@@ -68,7 +68,7 @@ class BaseCtx:
 
         self.ctx.destroy()
         self.connected = (passwd[0], usr)
-        return True
+        return self.get_connected()
 
     def get_connected(self):
         return self.connected
