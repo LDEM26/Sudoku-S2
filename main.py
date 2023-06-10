@@ -130,39 +130,30 @@ def partie_j():
     MySQL.askNoReturn("UPDATE statistiques SET nbparties='"+str(nbpart[0]+1)+"' WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")    #Incrémente le nombre de partie joué
 
 
-#Fonction pour mettre à jour le compte à rebours
-def mettre_a_jour_compte_a_rebours():
-        temps_ecoule = int(time.time() - temps_debut)
-        temps_restant = max(duree - temps_ecoule, 0)
-        minutes = temps_restant // 60
-        secondes = temps_restant % 60
-        temps_texte = f"Temps restant : {minutes:02d}:{secondes:02d}"
-        label_compte_a_rebours.config(text=temps_texte)
-        if temps_ecoule < duree:
-            fenetre.after(1000, mettre_a_jour_compte_a_rebours)
-        else:
-            abandonner()
+
+def tempo(tc):
+    mins, secs = divmod(tc, 60)
+    timer = '{:02d}:{:02d}'.format(mins, secs)
+    label_compte_a_rebours['text'] = f"Temps restant : {timer}"
+    if tc:
+        fenetre.after(1000, lambda: tempo(tc-1))
+    else:
+        abandonner()
+        
 
 
     
 #Création du label pour afficher le compte à rebours
-label_compte_a_rebours = Label(frame_compte_a_rebours, text="Temps restant : 03:00", font=("Arial", 18))
+label_compte_a_rebours = Label(frame_compte_a_rebours, font=("Arial", 18))
 label_compte_a_rebours.pack()
 
 
-#Début du compte à rebours
-temps_debut = time()
-#Démarrage de la mise à jour du compte à rebours
-fenetre.after(1000, mettre_a_jour_compte_a_rebours)
-    
 
 
 #créer la grille, ce qui s'active quand on clique sur jouer
 def jouer(diff:float=0.5, taille:int=3) -> None:
 #grille de 9 carré gris
-    
-    
-    
+    tempo(180)
     #bouton jouer
     boutjouer.config(state="disabled")
     global boutabandonner
