@@ -46,8 +46,17 @@ framejouer.place(x=200, y=30)
 frameabandonner=Frame(fenetre)
 frameabandonner.place(x=300, y=30)
 
+
+
+
 #compteur de vie
 compteur = 3
+
+
+
+
+
+
 
 
 
@@ -100,6 +109,10 @@ def gagne():
     """
     victoire = MySQL.askOne("SELECT victoires FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'") 
     MySQL.askNoReturn("UPDATE statistiques SET victoires='"+str(victoire[0]+1)+"' WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")    #Incrémente le nombre de victoires
+
+
+
+
 
 
 #créer la grille, ce qui s'active quand on clique sur jouer
@@ -178,6 +191,7 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
                         gagne.geometry("500x160+380+190")
                         lab4=Label(gagne, text="PARTIE GAGNE", font=('impact',50), fg='green')
                         lab4.pack()
+                        boutok=Button(gagne,text='ok', command=exit_btn)
                         gagne()
                     del(listentry[cle])
                 else:
@@ -192,12 +206,41 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
                         faux.geometry("400x200+380+190")
                         lab=Label(faux, text=f"Mauvaise Réponse \n\n Il vous reste {compteur} vie(s)", font='arial',width=400)
                         lab.pack()
-        
-                    
+                        
     fenetre.bind_all("<Return>", on_return)
     
+    #Durée du compte à rebours en secondes
+    duree = 3 * 60  # 3 minutes
+
+    
+
+    #Fonction pour mettre à jour le compte à rebours
+    def mettre_a_jour_compte_a_rebours():
+        temps_ecoule = int(time.time() - temps_debut)
+        temps_restant = max(duree - temps_ecoule, 0)
+        minutes = temps_restant // 60
+        secondes = temps_restant % 60
+        temps_texte = f"Temps restant : {minutes:02d}:{secondes:02d}"
+        label_compte_a_rebours.config(text=temps_texte)
+        if temps_ecoule < duree:
+            fenetre.after(1000, mettre_a_jour_compte_a_rebours)
+        else:
+            abandonner()
 
 
+    #Création de la frame pour afficher le compte à rebours
+    frame_compte_a_rebours = Frame(fenetre)
+    frame_compte_a_rebours.place(x=570, y=15)
+    
+    #Création du label pour afficher le compte à rebours
+    label_compte_a_rebours = Label(frame_compte_a_rebours, text="Temps restant : 03:00", font=("Arial", 24))
+    label_compte_a_rebours.pack()
+
+    #Début du compte à rebours
+    temps_debut = time.time()
+
+    #Démarrage de la mise à jour du compte à rebours
+    fenetre.after(1000, mettre_a_jour_compte_a_rebours)
 
     
 #bouton jouer
