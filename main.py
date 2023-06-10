@@ -112,14 +112,22 @@ def perdu() :
     """
     defaite = MySQL.askOne("SELECT défaites FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'") 
     MySQL.askNoReturn("UPDATE statistiques SET défaites='"+str(defaite[0]+1)+"' WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")    #Incrémente le nombre de défaites
+    partie_j()
         
 def gagner():
     """
-    Le joueur a gagné, on ajout 1 au compteur de défaite sur la BDD
+    Le joueur a gagné, on ajout 1 au compteur de victoire sur la BDD
     """
     victoire = MySQL.askOne("SELECT victoires FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'") 
     MySQL.askNoReturn("UPDATE statistiques SET victoires='"+str(victoire[0]+1)+"' WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")    #Incrémente le nombre de victoires
+    partie_j()
 
+def partie_j():
+    """
+    Le joueur a joué une partie, on ajout 1 au compteur de partie joué sur la BDD
+    """
+    nbpart = MySQL.askOne("SELECT nbparties FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'") 
+    MySQL.askNoReturn("UPDATE statistiques SET nbparties='"+str(nbpart[0]+1)+"' WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")    #Incrémente le nombre de partie joué
 
 
 #Fonction pour mettre à jour le compte à rebours
