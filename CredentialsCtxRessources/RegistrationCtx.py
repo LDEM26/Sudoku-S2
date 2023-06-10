@@ -17,9 +17,10 @@ class RegistrationCtx(BaseCtx):
             self.show_error("Veuillez remplir tous les champs")
             return
 
-        if self.set_user(usr, pswd):
-            self.connected = True
+        r = self.set_user(usr, pswd)
+        if r:
             self.ctx.destroy()
+            super().set_connected(id, usr)
             return True
         else:
             self.show_error("L'utilisateur existe déjà")
@@ -55,6 +56,8 @@ class RegistrationCtx(BaseCtx):
 
         registration_window.mainloop()
 
+        return super().get_connected()
+
     @staticmethod
     def set_user(pseudo: str, mdp: str):
         #cle_chargee = charger_cle('cle.txt')               non fonctionnel.
@@ -64,7 +67,7 @@ class RegistrationCtx(BaseCtx):
             res = MySQL.askNoReturn(f"INSERT INTO joueur(idJoueur, pseudo, mdp, date_inscription) VALUES (NULL, '{pseudo}', '{mdp}', '{date}')", True) #cryptage non fonctionnel
             last_id = res.lastrowid
             MySQL.askNoReturn(f"INSERT INTO statistiques VALUES ({last_id}, 0, 0, 0, 0, 0, NULL, 0)")
-            return True
+            return True, last_id
         return False
 
     @staticmethod
