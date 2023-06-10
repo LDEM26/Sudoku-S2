@@ -14,7 +14,7 @@ from fenetre1cp import *
 from tkinter import messagebox as tkMessageBox
 from MySQL import *
 from Player import *
-
+from classement import *
 
 
 
@@ -83,7 +83,7 @@ label_compte_a_rebours.pack()
 
 
 #Début du compte à rebours
-temps_debut = time.time()
+#temps_debut = time.time()
 #Démarrage de la mise à jour du compte à rebours
 fenetre.after(1000, mettre_a_jour_compte_a_rebours)
     
@@ -128,6 +128,8 @@ def abandonner():
     lab3=Label(gameover, text="GAME OVER", font=('impact',50), fg='red')
     lab3.pack()
     perdu()
+    maj_ratio(Player.get_idJoueur(user))
+    maj_classement()
 
 def perdu() :
     """
@@ -136,7 +138,7 @@ def perdu() :
     defaite = MySQL.askOne("SELECT défaites FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'") 
     MySQL.askNoReturn("UPDATE statistiques SET défaites='"+str(defaite[0]+1)+"' WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")    #Incrémente le nombre de défaites
         
-def gagne():
+def gagner():
     """
     Le joueur a gagné, on ajout 1 au compteur de défaite sur la BDD
     """
@@ -228,7 +230,9 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
                         lab4=Label(gagne, text="PARTIE GAGNE", font=('impact',50), fg='green')
                         lab4.pack()
                         boutok=Button(gagne,text='ok', command=exit_btn)
-                        gagne()
+                        gagner()
+                        maj_ratio(Player.get_idJoueur(user))
+                        maj_classement()
                     del(listentry[cle])
                 else:
                     global compteur
@@ -271,7 +275,12 @@ def nb_parties():
     parties = MySQL.askOne("SELECT nbparties FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")
     return parties[0]
 
-
+def get_classement():
+    """
+    Prend le classement
+    """
+    classem= MySQL.askOne("SELECT classement FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")
+    return classem[0]
 
 canvas = Canvas(fenetre, width=300, height=300, bg='ivory', borderwidth=0, highlightthickness=0)
 canvas.place(x=60,y=150)
@@ -282,7 +291,7 @@ canvas.create_text(70, 60, text= f"Partie gagnées : {nb_vict()}",fill="black",f
 canvas.create_text(70, 90, text= f"Partie perdues : {nb_def()}",fill="black",font=('arial 11'))
 canvas.create_text(70, 120, text= f"Parties joués : {nb_parties()}",fill="black",font=('arial 11 '))
 canvas.create_text(70, 150, text=f"Vie restante : {compteur}",fill="black",font=('arial 11'))
-
+canvas.create_text(70, 180, text= f"Classement : {get_classement()}",fill="black",font=('arial 11 '))
 
 
 def sauve():
