@@ -14,7 +14,7 @@ from fenetre1cp import *
 from tkinter import messagebox as tkMessageBox
 from MySQL import *
 from Player import *
-
+from classement import *
 
 
 
@@ -86,6 +86,8 @@ def abandonner():
     lab3=Label(gameover, text="GAME OVER", font=('impact',50), fg='red')
     lab3.pack()
     perdu()
+    maj_ratio(Player.get_idJoueur(user))
+    maj_classement()
 
 def perdu() :
     """
@@ -93,8 +95,9 @@ def perdu() :
     """
     defaite = MySQL.askOne("SELECT défaites FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'") 
     MySQL.askNoReturn("UPDATE statistiques SET défaites='"+str(defaite[0]+1)+"' WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")    #Incrémente le nombre de défaites
+
         
-def gagne():
+def gagner():
     """
     Le joueur a gagné, on ajout 1 au compteur de défaite sur la BDD
     """
@@ -173,12 +176,14 @@ def jouer(diff:float=0.5, taille:int=3) -> None:
                 if listsol[ligne][colonne]==int(valeur):
                     cle.config(state="disabled",disabledbackground="#BEFFB9")
                     if len(listentry)==1:
+                        gagner()
+                        maj_ratio(Player.get_idJoueur(user))
+                        maj_classement()
                         boutjouer.config(state='normal')
                         gagne=Toplevel(fenetre)
                         gagne.geometry("500x160+380+190")
                         lab4=Label(gagne, text="PARTIE GAGNE", font=('impact',50), fg='green')
                         lab4.pack()
-                        gagne()
                     del(listentry[cle])
                 else:
                     global compteur
