@@ -98,8 +98,8 @@ def gagne():
     """
     Le joueur a gagné, on ajout 1 au compteur de défaite sur la BDD
     """
-    defaite = MySQL.askOne("SELECT victoires FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'") 
-    MySQL.askNoReturn("UPDATE statistiques SET victoires='"+str(defaite[0]+1)+"' WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")    #Incrémente le nombre de victoires
+    victoire = MySQL.askOne("SELECT victoires FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'") 
+    MySQL.askNoReturn("UPDATE statistiques SET victoires='"+str(victoire[0]+1)+"' WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")    #Incrémente le nombre de victoires
 
 
 #créer la grille, ce qui s'active quand on clique sur jouer
@@ -205,15 +205,37 @@ boutjouer=Button(framejouer, bg='#45e325', text='Jouer', fg='white', font='Impac
 boutjouer.grid()
 
 
+def nb_def():
+    """
+    Prend le nombre de défaites
+    """
+    defaite = MySQL.askOne("SELECT défaites FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")
+    return defaite[0]
+
+def nb_vict():
+    """
+    Prend le nb de victoires
+    """
+    victoire = MySQL.askOne("SELECT victoires FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")
+    return victoire[0]
+
+def nb_parties():
+    """
+    Prend le nb de parties
+    """
+    parties = MySQL.askOne("SELECT nbparties FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")
+    return parties[0]
+
+
+
 canvas = Canvas(fenetre, width=300, height=300, bg='ivory', borderwidth=0, highlightthickness=0)
 canvas.place(x=60,y=150)
 
 canvas.create_text(150, 20, text= "Info joueur",fill="black",font=('Helvetica 12 bold italic underline'))
-canvas.create_text(70, 60, text= "Partie gagnées :",fill="black",font=('arial 11'))
-canvas.create_text(70, 90, text= "Partie perdues :",fill="black",font=('arial 11'))
-canvas.create_text(70, 120, text= "Points :",fill="black",font=('arial 11 '))
+canvas.create_text(70, 60, text= f"Partie gagnées : {nb_vict()}",fill="black",font=('arial 11'))
+canvas.create_text(70, 90, text= f"Partie perdues : {nb_def()}",fill="black",font=('arial 11'))
+canvas.create_text(70, 120, text= f"Parties joués : {nb_parties()}",fill="black",font=('arial 11 '))
 canvas.create_text(70, 150, text=f"Vie restante : {compteur}",fill="black",font=('arial 11'))
-
 
 
 
