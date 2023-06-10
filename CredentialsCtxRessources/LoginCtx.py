@@ -1,5 +1,5 @@
 from CredentialsCtxRessources.BaseCtx import BaseCtx
-from tkinter import Button, Toplevel
+from tkinter import Button
 
 
 class LoginCtx(BaseCtx):
@@ -9,7 +9,8 @@ class LoginCtx(BaseCtx):
 
     def go_to_registration(self):
         registration_ctx = self.get_registration_ctx()
-        registration_ctx.generate()
+        login = registration_ctx.generate()
+        self.set_connected(login)
 
 
     def generate(self):

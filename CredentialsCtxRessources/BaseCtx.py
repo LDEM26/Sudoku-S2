@@ -68,10 +68,13 @@ class BaseCtx:
 
         self.ctx.destroy()
         self.connected = (passwd[0], usr)
-        return True
+        return self.get_connected()
 
     def get_connected(self):
         return self.connected
 
     def get_title(self):
         raise NotImplementedError("La méthode get_title doit être implémentée dans la classe enfant.")
+    
+    def set_connected(self, connected, usr = None):
+        self.connected = connected if usr is None else (connected, usr)
