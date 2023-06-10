@@ -231,6 +231,7 @@ def nb_parties():
 canvas = Canvas(fenetre, width=300, height=300, bg='ivory', borderwidth=0, highlightthickness=0)
 canvas.place(x=60,y=150)
 
+#####################Affichage statistiques##########################
 canvas.create_text(150, 20, text= "Info joueur",fill="black",font=('Helvetica 12 bold italic underline'))
 canvas.create_text(70, 60, text= f"Partie gagnées : {nb_vict()}",fill="black",font=('arial 11'))
 canvas.create_text(70, 90, text= f"Partie perdues : {nb_def()}",fill="black",font=('arial 11'))
