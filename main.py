@@ -166,14 +166,17 @@ def jouer(taille:int=3) -> None:
     label_compte_a_rebours = Label(frame_compte_a_rebours, font=("Arial", 18))
     label_compte_a_rebours.pack()
     diffi=(diff.get())
-    temps=90+20*(diffi-1)
+    if taille==3:
+        temps=90+20*(diffi-1)
+    else:
+        temps=300
     tempo(temps)
     #bouton jouer
     boutjouer.config(state="disabled")
     global boutabandonner
     boutabandonner=Button(frameabandonner, bg="#FF3333", text='abandoner', fg='white', font='impact', command=abandonner)
     boutabandonner.grid()
-    sudo1=sudo()
+    sudo1=sudo(taille)
     sudoku=sudo1.board
     solution=sudo1.solve()
     listsol=solution.board
@@ -183,25 +186,51 @@ def jouer(taille:int=3) -> None:
     frameprincipale.place(x=440, y=50)
     blanc=0
     nbcolumn=0
-    for j in range(9):
-        nbrow=0
-        for i in range(9):
-            l=Label(frameprincipale,bg='#858585',width=6,height=3,relief="groove",borderwidth=4)
-            l.grid(row=nbrow,column=nbcolumn)
-            lab.append([l,(j,i)]) 
-            blanc+=1
-            if blanc%3==0:
+    if taille==3:
+        for j in range(9):
+            nbrow=0
+            for i in range(9):
+                l=Label(frameprincipale,bg='#858585',width=6,height=3,relief="groove",borderwidth=4)
+                l.grid(row=nbrow,column=nbcolumn)
+                lab.append([l,(j,i)]) 
+                blanc+=1
+                if blanc%3==0:
+                    nbrow+=1
+                    lablanc=Label(frameprincipale,  text='', width=1,height=1)
+                    lablanc.grid(row=nbrow,column=nbcolumn)
                 nbrow+=1
-                lablanc=Label(frameprincipale,  text='', width=1,height=1)
-                lablanc.grid(row=nbrow,column=nbcolumn)
-            nbrow+=1
-        if blanc==27 or blanc==54:
-            for it in range(11):
-                nbcolumn+=1
-                lablanc2=Label(frameprincipale, text='',width=1,height=1)
-                lablanc.grid(row=nbrow,column=nbcolumn)
-        nbcolumn+=1
-            
+            if blanc==27 or blanc==54:
+                for it in range(11):
+                    nbcolumn+=1
+                    lablanc2=Label(frameprincipale, text='',width=1,height=1)
+                    lablanc.grid(row=nbrow,column=nbcolumn)
+            nbcolumn+=1
+       
+        
+       
+    else:   
+        if lab!=[]:
+            for la in lab:
+                la[0].destroy()
+        
+        for j in range(16):
+            nbrow=0
+            for i in range(16):
+                l=Label(frameprincipale,bg='#858585',width=3,height=1,relief="groove",borderwidth=4)
+                l.grid(row=nbrow,column=nbcolumn)
+                lab.append([l,(j,i)]) 
+                blanc+=1
+                if blanc%4==0:
+                    nbrow+=1
+                    lablanc=Label(frameprincipale,  text='', width=1,height=1)
+                    lablanc.grid(row=nbrow,column=nbcolumn)
+                nbrow+=1
+            if blanc==64 or blanc==128 or blanc==192:
+                for it in range(11):
+                    nbcolumn+=1
+                    lablanc2=Label(frameprincipale, text='',width=1,height=1)
+                    lablanc.grid(row=nbrow,column=nbcolumn)
+            nbcolumn+=1
             
             
     global listentry
@@ -213,7 +242,13 @@ def jouer(taille:int=3) -> None:
         texte=str(remplir(sudoku)[0])
         if texte=='0':
             entree=Entry(label, bg='#a1a1a1',cursor='cross', justify='center')
-            entree.place(width=44,height=45)
+            if taille==3:
+                w=44
+                h=45
+            else:
+                w=17
+                h=17
+            entree.place(width=w,height=h)
             listentry[entree]=l[1]
         else:
             label['text'] += texte
@@ -370,22 +405,8 @@ def ouvrir():
         
 # ouvrirResolution est dans le menu Resolution et permet d'ouvrir une grille en mode résolution
 
-def ouvrirResolution():
-    global grilleSudo,modeJeu,typeJeu
-    modeJeu=1
-    bactive.configure(state=DISABLED)
-    bdesactive.configure(state=ACTIVE)
-    myFormats =[('Fichier Texte','*.txt')]
-    fileOpen = TkFileDialog.askopenfilename(parent=fen,filetypes=myFormats,title='Choisir fichier')
-    if fileOpen !='':
-        f=open(fileOpen, 'r')
-        grilleSudo=eval(f.read())
-        f.close
-        new()
-    typeJeu=1
-    bdesactive.configure(state=DISABLED)
-    bactive.configure(state=ACTIVE)
-    genere()
+def defquotidien():
+    jouer(4)
     
 
 
@@ -434,9 +455,11 @@ menuFichier.add_command(label="Quitter", command=stop_quit)
 
 menuResolution=Menu(barreDeMenus)                                                             
 barreDeMenus.add_cascade(label="Menu 1", menu=menuResolution)
+menuResolution.add_command(label="Défi quotidien", command=defquotidien)
+menuResolution.add_separator() 
 menuResolution.add_command(label="Abandonner", command=abandonner)
-menuResolution.add_separator()                                                                  
-menuResolution.add_command(label="Ouvrir une grille en mode résolution", command=ouvrirResolution)
+                                                                 
+
 
 menuInfo = Menu(barreDeMenus) 
 barreDeMenus.add_cascade(label="Règle du jeu", command=menuAPropos)# menu=menuInfo
