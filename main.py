@@ -106,6 +106,7 @@ def abandonner(tex=''):
         lab4.pack()
     perdu()
     maj_ratio(Player.get_idJoueur(user))
+    maj_point_def(diff.get(), Player.get_idJoueur(user))
     maj_classement()
     label_compte_a_rebours.destroy()
     pperd2.destroy()
@@ -136,7 +137,7 @@ def partie_j():
     Le joueur a joué une partie, on ajout 1 au compteur de partie joué sur la BDD
     """
     nbpart = MySQL.askOne("SELECT nbparties FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'") 
-    MySQL.askNoReturn("UPDATE statistiques SET nbparties='"+str(nbpart[0]+1)+"' WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")    #Incrémente le nombre de partie joué
+    MySQL.askNoReturn("UPDATE statistiques SET nbparties='"+str(nbpart[0]+1)+"' WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")    #Incrémente le nombre de partie jouée
 
 
 
@@ -232,6 +233,7 @@ def jouer(taille:int=3) -> None:
                     if len(listentry)==1:
                         gagner()
                         maj_ratio(Player.get_idJoueur(user))
+                        maj_point_vict(diff.get(), Player.get_idJoueur(user))
                         maj_classement() 
                         boutabandonner.destroy()
                         boutjouer.config(state='normal')
@@ -401,7 +403,7 @@ def bdesactive():
 def menuAPropos():
      fen=Toplevel(fenetre)
      fen.geometry("500x500")
-     lab=Label(fen, text="Voici les règles du Sudoku \n Il faut remplir les cases. \n Bonne chance!\n",font='arial',width=100)
+     lab=Label(fen, text="Voici les règles du Sudoku \n Il faut remplir les cases, \n Sans qu'un chiffre apparaisse \n Deux fois sur la même ligne ou \n Même colonne \n Bonne chance!\n",font='arial',width=100)
      lab.pack() 
      lab1=Label(fen, text='Par Elouan, Léopold et Lydie', font=("Times New Roman", 10, "italic"))
      lab1.pack()
