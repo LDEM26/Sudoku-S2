@@ -150,6 +150,7 @@ def perdu() :
     defaite = MySQL.askOne("SELECT défaites FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'") 
     MySQL.askNoReturn("UPDATE statistiques SET défaites='"+str(defaite[0]+1)+"' WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")    #Incrémente le nombre de défaites
     partie_j()
+    menuResolution.entryconfigure(1, state=NORMAL)
         
 def gagner():
     """
@@ -158,7 +159,8 @@ def gagner():
     victoire = MySQL.askOne("SELECT victoires FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'") 
     MySQL.askNoReturn("UPDATE statistiques SET victoires='"+str(victoire[0]+1)+"' WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")    #Incrémente le nombre de victoires
     partie_j()
-
+    menuResolution.entryconfigure(1, state=NORMAL)
+    
 def partie_j():
     """
     Le joueur a joué une partie, on ajout 1 au compteur de partie joué sur la BDD
@@ -183,7 +185,7 @@ lab=[]
 #créer la grille, ce qui s'active quand on clique sur jouer
 def jouer(taille:int=3) -> None:
 #grille de 9 carré gris
-    
+    menuResolution.entryconfigure(1, state=DISABLED)
     global label_compte_a_rebours
     #Création du label pour afficher le compte à rebours
     label_compte_a_rebours = Label(frame_compte_a_rebours, font=("Arial", 18))
@@ -285,9 +287,7 @@ def jouer(taille:int=3) -> None:
             valeur=cle.get()
             if valeur== '':
                 pass                    
-                #clairement ne marche pas mais si on a suprimer toutes les valeur d'entry
-                #et donc que le
-                #jeu est terminer il faut ajouter plus 1 victoire dans la variable et Victoire et 
+                #controle si la réponse est juste 
             else :
                 if listsol[ligne][colonne]==int(valeur):
                     cle.config(state="disabled",disabledbackground="#BEFFB9")
@@ -475,7 +475,7 @@ def bdesactive():
 def menuAPropos():
      fen=Toplevel(fenetre)
      fen.geometry("500x500")
-     lab=Label(fen, text="Voici les règles du Sudoku \n Il faut remplir les cases, \n Sans qu'un chiffre apparaisse \n Deux fois sur la même ligne ou \n Même colonne \n Bonne chance!\n",font='arial',width=100)
+     lab=Label(fen, text="Voici les règles du Sudoku \n Il faut remplir les cases, \n Sans qu'un chiffre apparaisse \n deux fois sur la même ligne ou \n la même colonne \n Bonne chance!\n",font='arial',width=100)
      lab.pack() 
      lab1=Label(fen, text='Par Elouan, Léopold et Lydie', font=("Times New Roman", 10, "italic"))
      lab1.pack()
@@ -500,10 +500,9 @@ menuFichier.add_separator()
 menuFichier.add_command(label="Quitter", command=stop_quit)
 
 menuResolution=Menu(barreDeMenus)                                                             
-barreDeMenus.add_cascade(label="Menu 1", menu=menuResolution)
-menuResolution.add_command(label="Défi quotidien", command=defquotidien)
-menuResolution.add_separator() 
-menuResolution.add_command(label="Abandonner", command=abandonner)
+barreDeMenus.add_cascade(label="Défi", menu=menuResolution)
+menuResolution.add_command(label="Défi 4X4 expert", command=defquotidien)
+
                                                                  
 
 
