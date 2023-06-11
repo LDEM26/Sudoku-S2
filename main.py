@@ -357,7 +357,21 @@ def get_classement():
     return classem[0]
 
 info=Frame(fenetre, width=500, height=400, bg='ivory')
-info.place(x=60,y=150)
+info.place(x=60,y=210)
+
+def get_points():
+    """
+    Prend le points
+    """
+    points = MySQL.askOne("SELECT points FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")
+    return points[0]
+
+def get_ratio():
+    """
+    Prend le ratio
+    """
+    ratio = MySQL.askOne("SELECT ratiovd FROM statistiques WHERE idJoueur='"+str(Player.get_idJoueur(user))+"'")
+    return ratio[0]
 
 #####################Affichage statistiques##########################
 infojoueur=Label(info,text= "Info joueur \n",fg="black",bg='ivory',font=('Helvetica 12 bold italic underline'))
@@ -372,6 +386,11 @@ viereste=Label(info,text= "Vie restante : ",fg="black",bg='ivory',font=('arial 1
 viereste.grid(row=4,column=0)
 classement=Label(info,text= "Classement : ",fg="black",bg='ivory',font=('arial 11'))
 classement.grid(row=5,column=0)
+ratio=Label(info,text= "Ratio : ",fg="black",bg='ivory',font=('arial 11'))
+ratio.grid(row=6,column=0)
+points=Label(info,text= "Points : ",fg="black",bg='ivory',font=('arial 11'))
+points.grid(row=7,column=0)
+
 
 
 pgagne2=Label(info,text= nb_vict(),fg="black",bg='ivory',font=('arial 11'))
@@ -384,7 +403,10 @@ viereste2=Label(info,text= compteur,fg="black",bg='ivory',font=('arial 11'))
 viereste2.grid(row=4,column=1)
 classement2=Label(info,text= get_classement(),fg="black",bg='ivory',font=('arial 11'))
 classement2.grid(row=5,column=1)
-
+ratio2=Label(info,text= get_ratio(),fg="black",bg='ivory',font=('arial 11'))
+ratio2.grid(row=6,column=0)
+points2=Label(info,text= get_points(),fg="black",bg='ivory',font=('arial 11'))
+points2.grid(row=7,column=0)
 
 
 def sauve():
