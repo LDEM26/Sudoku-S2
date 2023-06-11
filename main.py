@@ -414,9 +414,9 @@ viereste2.grid(row=4,column=1)
 classement2=Label(info,text= get_classement(),fg="black",bg='ivory',font=('arial 11'))
 classement2.grid(row=5,column=1)
 ratio2=Label(info,text= get_ratio(),fg="black",bg='ivory',font=('arial 11'))
-ratio2.grid(row=6,column=0)
+ratio2.grid(row=6,column=1)
 points2=Label(info,text= get_points(),fg="black",bg='ivory',font=('arial 11'))
-points2.grid(row=7,column=0)
+points2.grid(row=7,column=1)
 
 
 def sauve():
