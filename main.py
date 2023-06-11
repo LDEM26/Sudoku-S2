@@ -93,6 +93,9 @@ def sudo(taille:int = 3):
         
 
 def abandonner(tex=''):
+    """
+    Gère l'abandon ou la défaite du joueur
+    """
     Button.destroy(boutabandonner)
     boutjouer.config(state="normal")
     for cle in listentry:
