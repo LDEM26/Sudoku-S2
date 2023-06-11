@@ -15,6 +15,7 @@ from tkinter import messagebox as tkMessageBox
 from MySQL import *
 from Player import *
 from classement import *
+import datetime
 
 
 
@@ -92,10 +93,11 @@ def remplir(listesudo:list) -> tuple:
                 return (val, listesudo)
 
 #générer aléatoirement des listes de sudoku
-def sudo(taille:int):
+def sudo(taille:int, graine=None):
     valdiff=(diff.get())/10
     #créer graine aléatoire
-    graine=randint(0,10000)
+    if graine == None :
+        graine=randint(0,50000)
     #créer la grille avec la graine
     if taille==3:
         sudoku=Sudoku(taille, seed=graine).difficulty(valdiff) 
@@ -183,7 +185,7 @@ def tempo(tc):
 lab=[]
 
 #créer la grille, ce qui s'active quand on clique sur jouer
-def jouer(taille:int=3) -> None:
+def jouer(taille:int=3, graine=None) -> None:
 #grille de 9 carré gris
     menuResolution.entryconfigure(1, state=DISABLED)
     global label_compte_a_rebours
@@ -201,7 +203,7 @@ def jouer(taille:int=3) -> None:
     global boutabandonner
     boutabandonner=Button(frameabandonner, bg="#FF3333", text='abandoner', fg='white', font='impact', command=abandonner)
     boutabandonner.grid()
-    sudo1=sudo(taille)
+    sudo1=sudo(taille, graine)
     sudoku=sudo1.board
     solution=sudo1.solve()
     listsol=solution.board
@@ -422,7 +424,7 @@ points2.grid(row=7,column=1)
 
 def sauve():
       myFormats =[('Fichier Texte','*.txt')]
-      fileName = TkFileDialog.asksaveasfilename(parent=fen,filetypes=myFormats,title='Enregistrer sous...')
+      fileName = TkFileDialog.asksaveasfilename(parent=fenetre,filetypes=myFormats,title='Enregistrer sous...')
       if fileName !='':
             f=open(fileName, 'w')
             f.write(str(grilleSudo))
@@ -439,7 +441,7 @@ def ouvrir():
     bactive.configure(state=DISABLED)
     bdesactive.configure(state=ACTIVE)
     myFormats =[('Fichier Texte','*.txt')]
-    fileOpen = TkFileDialog.askopenfilename(parent=fen,filetypes=myFormats,title='Choisir fichier')
+    fileOpen = TkFileDialog.askopenfilename(parent=fenetre,filetypes=myFormats,title='Choisir fichier')
     if fileOpen !='':
         f=open(fileOpen, 'r')
         grilleSudo=eval(f.read())
@@ -449,10 +451,14 @@ def ouvrir():
 # ouvrirResolution est dans le menu Resolution et permet d'ouvrir une grille en mode résolution
 
 def defquotidien():
+    myString = datetime.datetime.now()
+    date= myString.strftime('%Y-%m-%d %H:%M:%S')
+    datefinale = str(f"{date[2]}{date[3]}{date[5]}{date[6]}{date[8]}{date[9]}")  #Création grille unique à partir de date du jour
+    graine = int(datefinale)
     if lab!=[]:
         for la in lab:
             la[0].destroy()
-    jouer(4)
+    jouer(4, graine)
     
 
 
@@ -493,6 +499,8 @@ fenetre.config(menu=barreDeMenus)
 
 menuFichier=Menu(barreDeMenus)
 
+#############Stats sur interface graphique
+
 barreDeMenus.add_cascade(label="Changer de session", menu=menuFichier)
 menuFichier.add_command(label="Ouvrir...", command=ouvrir)                          
 menuFichier.add_command(label="Enregistrer sous...", command=sauve)
@@ -501,16 +509,12 @@ menuFichier.add_command(label="Quitter", command=stop_quit)
 
 menuResolution=Menu(barreDeMenus)                                                             
 barreDeMenus.add_cascade(label="Défi", menu=menuResolution)
-menuResolution.add_command(label="Défi 4X4 expert", command=defquotidien)
+menuResolution.add_command(label="Défi Quotidient", command=defquotidien)
 
-                                                                 
-
+                                                            
 
 menuInfo = Menu(barreDeMenus) 
 barreDeMenus.add_cascade(label="Règle du jeu", command=menuAPropos)# menu=menuInfo
-
-
-
 
 
 fenetre.mainloop()
