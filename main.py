@@ -21,7 +21,7 @@ from classement import *
 #création fenetre principale
 fenetre=Tk()
 fenetre.title('Sudoku')
-fenetre.geometry('1000x600+100+10')
+fenetre.geometry('1000x650+100+10')
 
 
 #frame pour choisir la difficulté
@@ -92,12 +92,15 @@ def remplir(listesudo:list) -> tuple:
                 return (val, listesudo)
 
 #générer aléatoirement des listes de sudoku
-def sudo(taille:int = 3):
+def sudo(taille:int):
     valdiff=(diff.get())/10
     #créer graine aléatoire
     graine=randint(0,10000)
     #créer la grille avec la graine
-    sudoku=Sudoku(taille, seed=graine).difficulty(valdiff) 
+    if taille==3:
+        sudoku=Sudoku(taille, seed=graine).difficulty(valdiff) 
+    else:
+        sudoku=Sudoku(taille, seed=graine).difficulty(0.5) 
     # returner la grille      
     return sudoku
         
@@ -175,7 +178,7 @@ def tempo(tc):
         ecouler='Temps écoulé'
         abandonner(ecouler)
         
-
+lab=[]
 
 #créer la grille, ce qui s'active quand on clique sur jouer
 def jouer(taille:int=3) -> None:
@@ -218,14 +221,13 @@ def jouer(taille:int=3) -> None:
                 blanc+=1
                 if blanc%3==0:
                     nbrow+=1
-                    lablanc=Label(frameprincipale,  text='', width=1,height=1)
+                    lablanc=Label(frameprincipale,  text='', width=0,height=1)
                     lablanc.grid(row=nbrow,column=nbcolumn)
                 nbrow+=1
             if blanc==27 or blanc==54:
-                for it in range(11):
-                    nbcolumn+=1
-                    lablanc2=Label(frameprincipale, text='',width=1,height=1)
-                    lablanc.grid(row=nbrow,column=nbcolumn)
+                nbcolumn+=1
+                lablanc2=Label(frameprincipale, text='',width=0,height=1)
+                lablanc.grid(row=nbrow,column=nbcolumn)
             nbcolumn+=1
        
         
@@ -241,14 +243,13 @@ def jouer(taille:int=3) -> None:
                 blanc+=1
                 if blanc%4==0:
                     nbrow+=1
-                    lablanc=Label(frameprincipale,  text='', width=1,height=1)
-                    lablanc.grid(row=nbrow,column=nbcolumn)
-                nbrow+=1
-            if blanc==64 or blanc==128 or blanc==192:
-                for it in range(11):
-                    nbcolumn+=1
                     lablanc=Label(frameprincipale, text='',width=1,height=1)
                     lablanc.grid(row=nbrow,column=nbcolumn)
+                nbrow+=1
+            if blanc%64==0:
+                nbcolumn+=1
+                lablanc=Label(frameprincipale, text='',width=1,height=1)
+                lablanc.grid(row=nbrow,column=nbcolumn)
             nbcolumn+=1
             
             
@@ -266,7 +267,7 @@ def jouer(taille:int=3) -> None:
                 w=44
                 h=45
             else:
-                w=17
+                w=20
                 h=17
             entree.place(width=w,height=h)
             listentry[entree]=l[1]
@@ -367,7 +368,7 @@ def get_classement():
     return classem[0]
 
 info=Frame(fenetre, width=500, height=400, bg='ivory')
-info.place(x=60,y=210)
+info.place(x=80,y=170)
 
 def get_points():
     """
