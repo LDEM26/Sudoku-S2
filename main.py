@@ -120,6 +120,15 @@ def abandonner(tex=''):
     classement2.destroy()
     classement3=Label(info,text= get_classement(),fg="black",bg='ivory',font=('arial 11'))
     classement3.grid(row=5,column=1)
+    try :
+        lab2
+        if lab2!=[]:
+            for la in lab2:
+                la[0].destroy()
+    except NameError:
+        pass
+    
+    
 
 def perdu() :
     """
@@ -161,6 +170,7 @@ def tempo(tc):
 #créer la grille, ce qui s'active quand on clique sur jouer
 def jouer(taille:int=3) -> None:
 #grille de 9 carré gris
+    
     global label_compte_a_rebours
     #Création du label pour afficher le compte à rebours
     label_compte_a_rebours = Label(frame_compte_a_rebours, font=("Arial", 18))
@@ -182,6 +192,8 @@ def jouer(taille:int=3) -> None:
     listsol=solution.board
     global lab
     lab=[] #liste contenant les labels
+    global lab2
+    lab2=[]
     frameprincipale=Frame(fenetre)
     frameprincipale.place(x=440, y=50)
     blanc=0
@@ -207,18 +219,15 @@ def jouer(taille:int=3) -> None:
             nbcolumn+=1
        
         
-       
+    
     else:   
-        if lab!=[]:
-            for la in lab:
-                la[0].destroy()
-        
+             
         for j in range(16):
             nbrow=0
             for i in range(16):
                 l=Label(frameprincipale,bg='#858585',width=3,height=1,relief="groove",borderwidth=4)
                 l.grid(row=nbrow,column=nbcolumn)
-                lab.append([l,(j,i)]) 
+                lab2.append([l,(j,i)]) 
                 blanc+=1
                 if blanc%4==0:
                     nbrow+=1
@@ -228,7 +237,7 @@ def jouer(taille:int=3) -> None:
             if blanc==64 or blanc==128 or blanc==192:
                 for it in range(11):
                     nbcolumn+=1
-                    lablanc2=Label(frameprincipale, text='',width=1,height=1)
+                    lablanc=Label(frameprincipale, text='',width=1,height=1)
                     lablanc.grid(row=nbrow,column=nbcolumn)
             nbcolumn+=1
             
@@ -236,7 +245,8 @@ def jouer(taille:int=3) -> None:
     global listentry
     listentry={}
 
-
+    if taille==4:
+        lab=lab2
     for l in lab:
         label=l[0]
         texte=str(remplir(sudoku)[0])
@@ -406,6 +416,9 @@ def ouvrir():
 # ouvrirResolution est dans le menu Resolution et permet d'ouvrir une grille en mode résolution
 
 def defquotidien():
+    if lab!=[]:
+        for la in lab:
+            la[0].destroy()
     jouer(4)
     
 
