@@ -20,7 +20,7 @@ from classement import *
 
 #création fenetre principale
 fenetre=Tk()
-
+fenetre.title('Sudoku')
 fenetre.geometry('1000x600+100+10')
 
 
@@ -57,6 +57,16 @@ compteur = 3
     
 #Durée du compte à rebours en secondes
 duree = 3 * 60  # 3 minutes
+
+#Icone sudoku    
+Patou=PhotoImage(file="sudokut2.png")
+fenetre.iconphoto(False,Patou,)
+
+#frame image
+frameimage=Frame(fenetre)
+frameimage.place(x=0, y=200)
+label=Label(frameimage, image=Patou)
+label.pack()
 
     
 
