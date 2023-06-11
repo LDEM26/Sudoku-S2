@@ -494,6 +494,11 @@ def stop_quit():
         fenetre.destroy()
 
 
+def deco():
+    pass
+
+
+
 barreDeMenus=Menu(fenetre)                                                             
 fenetre.config(menu=barreDeMenus)
 
@@ -502,8 +507,7 @@ menuFichier=Menu(barreDeMenus)
 #############Stats sur interface graphique
 
 barreDeMenus.add_cascade(label="Changer de session", menu=menuFichier)
-menuFichier.add_command(label="Ouvrir...", command=ouvrir)                          
-menuFichier.add_command(label="Enregistrer sous...", command=sauve)
+menuFichier.add_command(label="Se déconnecter", command=deco)
 menuFichier.add_separator()                                                                  
 menuFichier.add_command(label="Quitter", command=stop_quit)
 
