@@ -96,6 +96,8 @@ def abandonner(tex=''):
     """
     Gère l'abandon ou la défaite du joueur
     """
+    global compteur
+    compteur = 3
     Button.destroy(boutabandonner)
     boutjouer.config(state="normal")
     for cle in listentry:
