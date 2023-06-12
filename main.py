@@ -60,7 +60,7 @@ compteur = 3
 duree = 3 * 60  # 3 minutes
 
 #Icone sudoku    
-"""
+
 Patou=PhotoImage(file="sudokut2.png")
 fenetre.iconphoto(False,Patou,)
 
@@ -69,7 +69,7 @@ frameimage=Frame(fenetre)
 frameimage.place(x=0, y=200)
 label=Label(frameimage, image=Patou)
 label.pack()
-"""
+
     
 
 
@@ -371,7 +371,7 @@ def get_classement():
     return classem[0]
 
 info=Frame(fenetre, width=500, height=400, bg='ivory')
-info.place(x=80,y=170)
+info.place(x=115,y=220)
 
 def get_points():
     """
@@ -495,8 +495,6 @@ def stop_quit():
         fenetre.destroy()
 
 
-def deco():
-    pass
 
 
 
@@ -508,7 +506,7 @@ menuFichier=Menu(barreDeMenus)
 #############Stats sur interface graphique
 
 barreDeMenus.add_cascade(label="Changer de session", menu=menuFichier)
-menuFichier.add_command(label="Se déconnecter", command=deco)
+
 menuFichier.add_separator()                                                                  
 menuFichier.add_command(label="Quitter", command=stop_quit)
 
