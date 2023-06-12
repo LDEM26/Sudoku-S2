@@ -194,9 +194,9 @@ def jouer(taille:int=3, graine=None) -> None:
     label_compte_a_rebours.pack()
     diffi=(diff.get())
     if taille==3:
-        temps=90+20*(diffi-1)
+        temps=120+20*(diffi-1)
     else:
-        temps=300
+        temps=600
     tempo(temps)
     #bouton jouer
     boutjouer.config(state="disabled")
