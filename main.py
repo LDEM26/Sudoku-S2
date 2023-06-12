@@ -60,6 +60,7 @@ compteur = 3
 duree = 3 * 60  # 3 minutes
 
 #Icone sudoku    
+"""
 Patou=PhotoImage(file="sudokut2.png")
 fenetre.iconphoto(False,Patou,)
 
@@ -68,7 +69,7 @@ frameimage=Frame(fenetre)
 frameimage.place(x=0, y=200)
 label=Label(frameimage, image=Patou)
 label.pack()
-
+"""
     
 
 
