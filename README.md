@@ -1,7 +1,7 @@
 # Sudoku-S2
 Projet sudoku info S2 pour la prépa
 Ce projet a été réalisé par Lydie ARCHIDOIT, Elouan MOULIN et Léopold DE MARCO.
-Il est codé entièrement sous la dernière version de python (3.11.x), et nécessite unee base de donnée mySQL pour fonctionner.
+Il est codé entièrement sous la dernière version de python (3.11.x), et nécessite une base de donnée mySQL pour fonctionner.
 Il vous faudra les scripts de la base de données ou bien les droits d'accès.
 
 
